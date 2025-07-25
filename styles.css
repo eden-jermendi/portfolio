@@ -1,0 +1,35 @@
+#navbar {
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  background-color: rgba(197, 180, 248, 0.317);
+}
+
+nav a {
+  color: rgb(79, 79, 79);
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+#welcome-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(220, 184, 255, 0.22);
+  height: 800px;
+}
+
+h1 {
+  color: blueviolet;
+}
+
+p {
+  color: rgb(225, 119, 225);
+}
