@@ -31,7 +31,7 @@ h1 {
   font-size: 44px;
 }
 
-p {
+#welcome-section p {
   color: rgb(225, 119, 225);
   font-size: 24px;
   margin-top: -12px;
@@ -91,4 +91,62 @@ p {
 
 .container {
     padding-bottom: 60px;
+}
+
+#contact {
+  background-color: rgba(197, 180, 248, 0.317);
+  padding: 60px 0;  
+}
+
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  gap: 40px;
+  max-width: 1200px;  
+  margin: 0 auto;    
+}
+.contact-text {
+  flex: 1;
+  max-width: 500px;
+}
+
+.contact-text h2 {
+  color: blueviolet;
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.contact-text p {
+  color: rgb(225, 119, 225);
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.contact-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.contact-icons a {
+  color: rgb(79, 79, 79);
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  border: 2px solid blueviolet;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  display: block;
+  min-width: 120px;
+  text-align: center;
+}
+
+.contact-icons a:hover {
+  background-color: blueviolet;
+  color: white;
+  transform: translateY(-2px);
 }
