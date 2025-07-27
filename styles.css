@@ -1,15 +1,16 @@
 :root {
-  --color-bg-main: #eaddff;
-  --color-bg-alt: #f3e5ff;
-  --color-bg-accent: #f0ddff;
-  --color-bg-footer: #e2cfff;
-  --color-bg-tile: #f6efff;
-  --color-bg-button: #fff7ff;
+  --color-bg-main: #faf5ff;
+  --color-bg-alt: var(--color-bg-main); 
+  --color-bg-accent: #f0e4ff;
+  --color-bg-footer: var(--color-bg-accent);
+  --color-bg-tile: #ffffff;
+  --color-bg-button: #ffffff;
 
   --color-text-primary: #4f4f4f;
-  --color-text-accent: #b55aff;
+  --color-text-accent: #8a2be2;
   --color-link-hover: #8a2be2;
-  --color-border: #bba0d4;
+  --color-border: #d3b8ef;
+  --color-accent-warm: #faae2b; 
 }
 
 html {
@@ -30,6 +31,7 @@ body {
   padding: 20px 40px;
   font-family: 'Fira Code', monospace;
   z-index: 1000;
+  border-bottom: 2px solid var(--color-link-hover);
 }
 
 nav a {
@@ -70,7 +72,7 @@ nav a:hover::after {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle at top, rgba(207, 162, 251, 0.25), transparent 90%);
+   background-color: var(--color-bg-main);
   height: 100vh;
   text-align: center;
   padding: 0 20px;
@@ -93,7 +95,7 @@ h1 {
 /* projects */
 
 #projects {
-  background-color: var(--color-bg-alt);
+  background-color: rgb(241, 235, 255);
   padding: 40px 0px;
 }
 
@@ -251,6 +253,10 @@ h1 {
 .footer-links a:hover {
   border-bottom: 1px solid var(--color-link-hover);
   color: var(--color-link-hover);
+}
+
+.emoji {
+  color: var(--color-accent-warm);
 }
 
 /* media query */
