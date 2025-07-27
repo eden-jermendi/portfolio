@@ -1,41 +1,77 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* navbar */
+
 #navbar {
   display: flex;
   justify-content: end;
   align-items: flex-end;
   background-color: rgba(197, 180, 248, 0.317);
+  padding: 20px 40px;
+  font-family: 'Fira Code', monospace;
 }
 
 nav a {
   color: rgb(79, 79, 79);
   text-decoration: none;
+  font-size: 1rem;
+  position: relative;
 }
 
 ul {
   list-style: none;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
 }
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -4px;
+  background-color: blueviolet;
+  transition: width 0.3s ease-in-out;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* welcome */
 
 #welcome-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(220, 184, 255, 0.22);
-  height: 800px;
+  background: radial-gradient(circle at top, rgba(207, 162, 251, 0.25), transparent 90%);
+  height: 100vh;
+  text-align: center;
+  padding: 0 20px;
 }
 
 h1 {
   color: blueviolet;
-  font-size: 44px;
+  font-size: 3.2rem;
+  margin-bottom: 12px;
+  font-weight: 600;
 }
 
 #welcome-section p {
   color: rgb(225, 119, 225);
-  font-size: 24px;
-  margin-top: -12px;
+  font-size: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
+
+/* projects */
 
 #projects {
     background-color: rgba(220, 184, 255, 0.22);
@@ -97,6 +133,8 @@ h1 {
   background-color: rgba(197, 180, 248, 0.317);
   padding: 60px 0;  
 }
+
+/* contact */
 
 .contact-container {
   display: flex;
