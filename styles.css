@@ -86,15 +86,16 @@ h1 {
 #projects h2 {
     text-align: center;
     font-size: 36px;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     color: blueviolet;
 }
 
 .project-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 42px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 48px;
     justify-items: center;
+    padding: 0 20px;
 }
 
 .project-card {
@@ -198,6 +199,43 @@ h1 {
   background-color: blueviolet;
   color: white;
   transform: translateY(-2px);
+}
+
+/* footer */
+
+#footer {
+  background-color: rgba(190, 170, 245, 0.35);
+  padding: 20px 40px;
+  font-family: 'Fira Code', monospace;
+  text-align: center;
+  color: rgb(79, 79, 79);
+  border-top: 2px solid blueviolet;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: rgb(79, 79, 79);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+  border-bottom: 1px solid blueviolet;
+  color: blueviolet;
 }
 
 /* media query */
