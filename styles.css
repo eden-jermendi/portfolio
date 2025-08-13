@@ -1,6 +1,6 @@
 :root {
   --color-bg-main: #faf5ff;
-  --color-bg-alt: var(--color-bg-main); 
+  --color-bg-alt: var(--color-bg-main);
   --color-bg-accent: #f0e4ff;
   --color-bg-footer: var(--color-bg-accent);
   --color-bg-tile: #ffffff;
@@ -10,7 +10,11 @@
   --color-text-accent: #8a2be2;
   --color-link-hover: #8a2be2;
   --color-border: #d3b8ef;
-  --color-accent-warm: #faae2b; 
+  --color-accent-warm: #faae2b;
+
+  /* NEW: one source of truth for layout width + side padding */
+  --content-max: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
 }
 
 html {
@@ -21,17 +25,34 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-/* navbar */
+/* utility: apply to inner containers that must align */
+.site-width,
+.container,
+.contact-container,
+.footer-container {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ===================== */
+/* HEADER / NAV           */
+/* ===================== */
+
+header {
+  background-color: var(--color-bg-main);
+  border-bottom: 2px solid var(--color-link-hover);
+  /* full width line */
+}
 
 #navbar {
   display: flex;
-  justify-content: end;
-  align-items: flex-end;
-  background-color: var(--color-bg-main);
-  padding: 20px 40px;
+  justify-content: flex-end;
+  align-items: center;
+  /* padding now handled by .site-width */
+  padding-block: 20px;
   font-family: 'Fira Code', monospace;
   z-index: 1000;
-  border-bottom: 2px solid var(--color-link-hover);
 }
 
 nav a {
@@ -65,7 +86,9 @@ nav a:hover::after {
   width: 100%;
 }
 
-/* welcome */
+/* ===================== */
+/* HERO                   */
+/* ===================== */
 
 #welcome-section {
   display: flex;
@@ -73,9 +96,10 @@ nav a:hover::after {
   justify-content: center;
   align-items: center;
   background-color: var(--color-bg-main);
-  height: 100vh;
+  min-height: 100vh;
   text-align: center;
-  padding: 0 20px;
+  padding-inline: var(--gutter);
+  /* keep hero text edges aligned visually */
 }
 
 h1 {
@@ -92,11 +116,13 @@ h1 {
   margin: 0 auto;
 }
 
-/* projects */
+/* ===================== */
+/* PROJECTS               */
+/* ===================== */
 
 #projects {
   background-color: rgb(241, 235, 255);
-  padding: 40px 0px;
+  padding-block: 40px;
 }
 
 #projects h2 {
@@ -108,10 +134,9 @@ h1 {
 
 .project-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 48px;
   justify-items: center;
-  padding: 0 20px;
 }
 
 .project-card {
@@ -129,6 +154,7 @@ h1 {
   text-decoration: none;
   color: inherit;
   margin-bottom: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .project-image {
@@ -151,27 +177,27 @@ h1 {
   padding-bottom: 60px;
 }
 
+/* now also controls width via utility */
+
 .project-tile:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
 }
 
-/* contact */
+/* ===================== */
+/* CONTACT                */
+/* ===================== */
 
 #contact {
   background-color: var(--color-bg-accent);
-  padding: 60px 0;
+  padding-block: 60px;
 }
 
 .contact-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
   gap: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .contact-text {
@@ -218,15 +244,18 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* footer */
+/* ===================== */
+/* FOOTER                 */
+/* ===================== */
 
 #footer {
   background-color: var(--color-bg-footer);
-  padding: 20px 40px;
-  font-family: 'Fira Code', monospace;
-  text-align: center;
-  color: var(--color-text-primary);
   border-top: 2px solid var(--color-link-hover);
+  /* full width line */
+  color: var(--color-text-primary);
+  font-family: 'Fira Code', monospace;
+  padding-block: 20px;
+  text-align: center;
 }
 
 .footer-container {
@@ -234,8 +263,6 @@ h1 {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .footer-links {
@@ -255,7 +282,9 @@ h1 {
   color: var(--color-link-hover);
 }
 
-/* media query */
+/* ===================== */
+/* MEDIA                  */
+/* ===================== */
 
 @media (max-width: 768px) {
   .contact-container {
