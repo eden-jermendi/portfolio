@@ -94,29 +94,40 @@ nav a:hover::after {
 /* ===================== */
 
 #welcome-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  /* simple vertical stack */
+  place-items: center;
+  /* center horizontally + vertically */
+  gap: 10px;
+  /* space between h1, p, and img */
   background-color: var(--color-bg-main);
-  min-height: 100vh;
   text-align: center;
-  padding-inline: var(--gutter);
-  /* keep hero text edges aligned visually */
+  padding: 64px var(--gutter) 14px;
+  min-height: auto;
 }
 
-h1 {
+#welcome-section h1 {
   color: var(--color-link-hover);
-  font-size: 3.2rem;
-  margin-bottom: 12px;
+  font-size: clamp(2.4rem, 4.2vw, 3.2rem);
+  margin: 0;
   font-weight: 600;
 }
 
 #welcome-section p {
   color: var(--color-text-accent);
-  font-size: 1.5rem;
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  margin: 0;
   max-width: 600px;
-  margin: 0 auto;
+}
+
+.hero-avatar {
+  width: clamp(160px, 18vw, 220px);
+  min-height: 200px;
+  min-width: 350px;
+  height: auto;
+  margin: 0;
+  display: block;
+  filter: saturate(0.95) contrast(1.02);
 }
 
 /* ===================== */
