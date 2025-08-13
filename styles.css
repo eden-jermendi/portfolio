@@ -12,7 +12,6 @@
   --color-border: #d3b8ef;
   --color-accent-warm: #faae2b;
 
-  /* NEW: one source of truth for layout width + side padding */
   --content-max: 1200px;
   --gutter: clamp(16px, 4vw, 40px);
 }
@@ -25,7 +24,6 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-/* utility: apply to inner containers that must align */
 .site-width,
 .container,
 .contact-container,
@@ -47,12 +45,17 @@ header {
 
 #navbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  /* padding now handled by .site-width */
   padding-block: 20px;
   font-family: 'Fira Code', monospace;
   z-index: 1000;
+}
+
+.logo svg {
+  height: 40px;
+  display: block;
+  color: var(--color-text-primary)
 }
 
 nav a {
@@ -176,8 +179,6 @@ h1 {
 .container {
   padding-bottom: 60px;
 }
-
-/* now also controls width via utility */
 
 .project-tile:hover {
   transform: translateY(-4px);
