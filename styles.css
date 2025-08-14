@@ -3,11 +3,10 @@
   --color-bg-main: #faf5ff;
   --color-bg-alt: var(--color-bg-main);
   --color-bg-accent: #f0e4ff;
-  --color-bg-footer: var(--color-bg-accent);
+  --color-bg-footer: #f0e4ff;
   --color-bg-tile: #ffffff;
   --color-bg-button: #ffffff;
   --color-avatar-bg: #ffffff;
-  /* added */
 
   --color-text-primary: #4f4f4f;
   --color-text-accent: #8a2be2;
@@ -24,27 +23,22 @@
   --tile-blur: 1.2px;
   --tile-filter: grayscale(1);
 
-  /* veil color as rgb tuple for use in rgba() */
   --veil-rgb: 255, 255, 255;
   --veil-strong: .80;
   --veil-soft: .60;
 
-  /* misc */
   --ring-start: #a774ff;
   --ring-end: #ffffff;
 
-  /* UI */
   --btn-bg: var(--color-bg-button);
   --btn-border: var(--color-link-hover);
   --btn-text: var(--color-text-primary);
 
-  /* subtle transitions */
   --ease: 240ms cubic-bezier(.2, .6, .2, 1);
 }
 
-/* === Dark theme overrides (deep purple "almost black") === */
+/* === Dark theme overrides === */
 :root[data-theme="dark"] {
-  /* full overrides when user explicitly chose dark */
   --color-bg-main: #0e0a13;
   --color-bg-alt: #0e0a13;
   --color-bg-accent: #151024;
@@ -113,7 +107,7 @@
 
 /* Base */
 html {
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
 }
 
 body {
@@ -185,7 +179,7 @@ header {
 }
 
 #navbar a:hover::after {
-  width: 100%
+  width: 100%;
 }
 
 /* Theme toggle button */
@@ -202,11 +196,11 @@ header {
 }
 
 .theme-toggle:hover {
-  transform: translateY(-1px)
+  transform: translateY(-1px);
 }
 
 .theme-toggle:active {
-  transform: translateY(0)
+  transform: translateY(0);
 }
 
 /* Hero */
@@ -249,21 +243,29 @@ header {
   text-align: center;
 }
 
-/* Avatar */
+/* Avatar (with overlay) */
+.avatar-link {
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+}
+
 .avatar-wrap {
   --ring-thickness: 14px;
   position: relative;
+  isolation: isolate;
+  /* make z-index stacking self-contained */
+  overflow: hidden;
   display: grid;
   place-items: center;
   width: clamp(160px, 22vw, 240px);
   aspect-ratio: 1/1;
   border-radius: 50%;
   background: none;
-  box-shadow:
-    0 12px 28px rgba(138, 43, 226, .12),
-    0 0 0 1px rgba(138, 43, 226, .18);
+  box-shadow: 0 12px 28px rgba(138, 43, 226, .12), 0 0 0 1px rgba(138, 43, 226, .18);
 }
 
+/* ring */
 .avatar-wrap::before {
   content: "";
   position: absolute;
@@ -272,8 +274,10 @@ header {
   background: linear-gradient(140deg, var(--ring-start) 0%, #d9c3ff 45%, var(--ring-end) 100%);
   -webkit-mask: radial-gradient(circle closest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness)));
   mask: radial-gradient(circle closest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness)));
+  z-index: 0;
 }
 
+/* glow */
 .avatar-wrap::after {
   content: "";
   position: absolute;
@@ -282,8 +286,10 @@ header {
   background: radial-gradient(circle, rgba(167, 116, 255, .18), transparent 65%);
   filter: blur(10px);
   pointer-events: none;
+  z-index: 0;
 }
 
+/* image */
 .hero-avatar {
   position: relative;
   z-index: 1;
@@ -291,14 +297,47 @@ header {
   height: 100%;
   border-radius: 50%;
   background: var(--color-avatar-bg);
-  /* changed from #fff */
   box-shadow: inset 0 2px 10px rgba(0, 0, 0, .06);
   object-fit: cover;
   object-position: 28% center;
+  transition: transform .25s var(--ease), filter .25s var(--ease);
+}
+
+/* overlay text */
+.avatar-overlay-text {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: .4px;
+  background-color: rgba(0, 0, 0, .5);
+  opacity: 0;
+  transition: opacity .25s var(--ease);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* hover triggers from either the link or the wrap */
+.avatar-wrap:hover .avatar-overlay-text,
+.avatar-link:hover .avatar-overlay-text,
+.avatar-link:focus-visible .avatar-overlay-text {
+  opacity: 1;
+}
+
+.avatar-wrap:hover .hero-avatar,
+.avatar-link:hover .hero-avatar,
+.avatar-link:focus-visible .hero-avatar {
+  filter: grayscale(.15) brightness(.9);
+  transform: scale(1.015);
 }
 
 /* Hover (pointer devices) */
-@media (pointer:fine) {
+@media (pointer: fine) {
   .avatar-wrap:hover {
     transform: translateY(-2px);
     transition: transform .25s ease;
@@ -308,7 +347,6 @@ header {
 /* Projects */
 #projects {
   background: var(--color-bg-accent);
-  /* was hardcoded rgb(...) */
   padding: 40px 0;
   transition: background-color var(--ease);
 }
@@ -351,14 +389,11 @@ header {
   transition: transform .25s, box-shadow .25s, border-color var(--ease), background-color var(--ease);
 }
 
-/* unified art layer (gradient + icon) */
 .project-tile::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(120% 120% at 30% 20%, rgba(138, 43, 226, .10), transparent 70%),
-    var(--tile-graphic, none);
+  background: radial-gradient(120% 120% at 30% 20%, rgba(138, 43, 226, .10), transparent 70%), var(--tile-graphic, none);
   background-repeat: no-repeat, no-repeat;
   background-position: center, center;
   background-size: 100% 100%, var(--tile-size);
@@ -368,15 +403,11 @@ header {
   z-index: 0;
 }
 
-/* veil uses theme variables */
 .project-tile::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 55%,
-      rgba(var(--veil-rgb), var(--veil-strong)) 0%,
-      rgba(var(--veil-rgb), var(--veil-soft)) 40%,
-      rgba(var(--veil-rgb), 0) 80%);
+  background: radial-gradient(circle at 50% 55%, rgba(var(--veil-rgb), var(--veil-strong)) 0%, rgba(var(--veil-rgb), var(--veil-soft)) 40%, rgba(var(--veil-rgb), 0) 80%);
   opacity: .9;
   transition: opacity .25s;
   z-index: 0;
@@ -419,7 +450,7 @@ header {
 
 .project-tile:hover::after,
 .project-tile:focus-visible::after {
-  opacity: .95
+  opacity: .95;
 }
 
 .project-tile:hover .tile-label,
@@ -446,7 +477,7 @@ header {
 
 .contact-text {
   flex: 1;
-  max-width: 500px
+  max-width: 500px;
 }
 
 .contact-text h2 {
@@ -511,7 +542,7 @@ header {
 
 .footer-links {
   display: flex;
-  gap: 20px
+  gap: 20px;
 }
 
 .footer-links a {
@@ -526,39 +557,21 @@ header {
   color: var(--color-link-hover);
 }
 
-/* === Decorative tile graphics (normalized) === */
+/* Decorative tile graphics */
 .tile-calc {
-  --tile-graphic: url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23b7bcd1' stroke-width='8'>\
-<rect x='20' y='20' width='160' height='160' rx='16'/>\
-<line x1='40' y1='60' x2='160' y2='60'/>\
-<line x1='40' y1='100' x2='160' y2='100'/>\
-<line x1='40' y1='140' x2='160' y2='140'/>\
-<circle cx='70' cy='60' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-<circle cx='110' cy='60' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-<circle cx='150' cy='60' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-<circle cx='50' cy='100' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-<circle cx='90' cy='100' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-<circle cx='130' cy='100' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-<circle cx='70' cy='140' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-<circle cx='110' cy='140' r='12' fill='%23b7bcd1' fill-opacity='.6'/>\
-</svg>");
+  --tile-graphic: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23b7bcd1' stroke-width='8'><rect x='20' y='20' width='160' height='160' rx='16'/><line x1='40' y1='60' x2='160' y2='60'/><line x1='40' y1='100' x2='160' y2='100'/><line x1='40' y1='140' x2='160' y2='140'/><circle cx='70' cy='60' r='12' fill='%23b7bcd1' fill-opacity='.6'/><circle cx='110' cy='60' r='12' fill='%23b7bcd1' fill-opacity='.6'/><circle cx='150' cy='60' r='12' fill='%23b7bcd1' fill-opacity='.6'/><circle cx='50' cy='100' r='12' fill='%23b7bcd1' fill-opacity='.6'/><circle cx='90' cy='100' r='12' fill='%23b7bcd1' fill-opacity='.6'/><circle cx='130' cy='100' r='12' fill='%23b7bcd1' fill-opacity='.6'/><circle cx='70' cy='140' r='12' fill='%23b7bcd1' fill-opacity='.6'/><circle cx='110' cy='140' r='12' fill='%23b7bcd1' fill-opacity='.6'/></svg>");
 }
 
 .tile-docs {
-  --tile-graphic: url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23b7bcd1' stroke-width='12'>\
-<polyline points='80,40 40,100 80,160'/>\
-<polyline points='120,40 160,100 120,160'/>\
-</svg>");
+  --tile-graphic: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none' stroke='%23b7bcd1' stroke-width='12'><polyline points='80,40 40,100 80,160'/><polyline points='120,40 160,100 120,160'/></svg>");
 }
 
 .tile-landing {
-  --tile-graphic: url('images/page-svgrepo-com.svg')
+  --tile-graphic: url('images/page-svgrepo-com.svg');
 }
 
 .tile-rps {
-  --tile-graphic: url('images/hand-shake-svgrepo-com.svg')
+  --tile-graphic: url('images/hand-shake-svgrepo-com.svg');
 }
 
 .tile-landing,
@@ -567,35 +580,62 @@ header {
   --tile-size: 74%;
 }
 
-/* === Media + Accessibility === */
+/* About page layout */
+.about {
+  background: var(--color-bg-main);
+  padding: 64px var(--gutter) 80px;
+  transition: background-color var(--ease);
+}
+
+.page-title {
+  color: var(--color-link-hover);
+  font-size: clamp(2rem, 4vw, 2.4rem);
+  margin: 0 0 20px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  transition: color var(--ease);
+}
+
+.prose p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0 0 16px;
+  color: var(--color-text-primary);
+  transition: color var(--ease);
+}
+
+/* Media + Accessibility */
 @media (max-width:768px) {
   .contact-container {
     flex-direction: column;
-    align-items: flex-start
+    align-items: flex-start;
   }
 
   .contact-text {
-    text-align: left
+    text-align: left;
   }
 
   #navbar ul {
     flex-direction: column;
-    gap: 15px
+    gap: 15px;
   }
 
-        .project-cards {
-          grid-template-columns: 1fr;
-        }
-        }
-    
-        /* Motion/accessibility */
-        @media (prefers-reduced-motion: reduce) {
-    
-          .project-tile,
-          .project-tile::before,
-          .project-tile::after,
-          .tile-label,
-          .project-image {
-            transition: none !important;
-          }
-        }
+  .project-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  .project-tile,
+  .project-tile::before,
+  .project-tile::after,
+  .tile-label,
+  .project-image,
+  .avatar-wrap,
+  .hero-avatar,
+  .avatar-overlay-text {
+    transition: none !important;
+  }
+}

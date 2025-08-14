@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Eden Jermendi's personal portfolio page. Let's see if we vibe..."
-    />
-    <title>Eden Jermendi's Portfolio</title>
+    <meta name="description" content="About Eden Jermendi" />
+    <title>About Me - Eden Jermendi</title>
+
+    <!-- Fonts + shared styles -->
     <link
       href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@400;600&display=swap"
       rel="stylesheet"
@@ -18,10 +17,12 @@
 
   <body>
     <main>
+      <!-- Header / Nav (same structure & IDs as index) -->
       <header>
         <div class="site-width">
           <nav id="navbar" aria-label="Primary">
             <a href="index.html" class="logo" aria-label="Eden Jermendi logo">
+              <!-- same SVG as index -->
               <svg
                 viewBox="0 0 512 512"
                 xmlns="http://www.w3.org/2000/svg"
@@ -35,11 +36,12 @@
             </a>
 
             <ul>
-              <li><a href="about.html">About</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="about.html" aria-current="page">About</a></li>
+              <li><a href="index.html#projects">Projects</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
             </ul>
 
+            <!-- Theme toggle -->
             <button
               id="theme-toggle"
               class="theme-toggle"
@@ -53,105 +55,28 @@
         </div>
       </header>
 
-      <section id="welcome-section" class="hero">
-        <div class="site-width hero-inner">
-          <!-- Avatar link with overlay text -->
-          <a href="about.html" class="avatar-link">
-            <div class="avatar-wrap">
-              <img
-                class="hero-avatar"
-                src="images/my-avatar-RPM.png"
-                alt="Stylised avatar of Eden Jermendi"
-              />
-              <span class="avatar-overlay-text">About Me</span>
-            </div>
-          </a>
-
-          <h1>Eden Jermendi's Portfolio</h1>
-          <p>Welcome! Let's see if we vibe...</p>
-        </div>
-      </section>
-
-      <section id="projects">
-        <div class="container">
-          <h2>My Projects</h2>
-
-          <div class="project-cards">
-            <div class="project-card">
-              <a
-                target="_blank"
-                href="https://edenjermendi.github.io/technical-doc/"
-                class="project-tile tile-docs"
-                aria-label="Technical Documentation project"
-              >
-                <span class="tile-label">Technical Documentation</span>
-              </a>
-              <p>Technical documentation page project</p>
-            </div>
-
-            <div class="project-card">
-              <a
-                target="_blank"
-                href="https://edenjermendi.github.io/product-landing-page/"
-                class="project-tile tile-landing"
-                aria-label="Product Landing project"
-              >
-                <span class="tile-label">Product Landing</span>
-              </a>
-              <p>Product landing page project</p>
-            </div>
-
-            <div class="project-card">
-              <a
-                target="_blank"
-                href="https://edenjermendi.github.io/paper-scissors-rock/"
-                class="project-tile tile-rps"
-                aria-label="Rock Paper Scissors project"
-              >
-                <span class="tile-label">Rock Paper Scissors</span>
-              </a>
-              <p>Interactive game project</p>
-            </div>
-
-            <div class="project-card">
-              <a
-                target="_blank"
-                href="https://edenjermendi.github.io/calculator/"
-                class="project-tile tile-calc"
-                aria-label="Calculator project"
-              >
-                <span class="tile-label">Calculator</span>
-              </a>
-              <p>Made using Vanilla JS, HTML and CSS</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact">
-        <div class="contact-container">
-          <div class="contact-text">
-            <h2>Want to work with me?</h2>
-            <p>Contact me here</p>
-          </div>
-
-          <div class="contact-icons">
-            <div>
-              <a
-                target="_blank"
-                id="profile-link"
-                href="https://github.com/edenjermendi"
-                >Github</a
-              >
-            </div>
-            <div>
-              <a
-                target="_blank"
-                href="mailto:ejermendi@gmail.com?subject=Let%27s%20work%20together%21"
-                >Email me</a
-              >
-            </div>
-            <div><a href="tel:+642102291894">Call me</a></div>
+      <!-- About content -->
+      <section class="about">
+        <div class="site-width">
+          <h1 class="page-title">About Me</h1>
+          <div class="prose">
+            <p>
+              Kia ora! I'm Eden Jermendi, a self-taught developer in progress.
+              I've completed Responsive Web Design with freeCodeCamp and I'm
+              working through The Odin Project's JavaScript path, focusing on
+              modern frontend plus Node/Express.
+            </p>
+            <p>
+              I'm aiming to contribute to open-source, explore backend and
+              cloud, and move into cybersecurity (especially pentesting). I like
+              building things that blend technical skill with creativity and
+              accessibility.
+            </p>
+            <p>
+              Beyond code, I care about music production, gaming, and exploring
+              cultural history and spirituality with a critical, anti-colonial
+              lens.
+            </p>
           </div>
         </div>
       </section>
@@ -159,24 +84,26 @@
       <footer id="footer">
         <div class="footer-container">
           <p>
-            Made with <span class="emoji">♥️</span> by Eden Jermendi · © 2025
+            Made with <span class="emoji">♥️</span> by Eden Jermendi · ©
+            <span id="year"></span>
           </p>
           <div class="footer-links">
             <a href="https://github.com/edenjermendi" target="_blank">GitHub</a>
-            <a href="#contact">Contact</a>
+            <a href="index.html#contact">Contact</a>
           </div>
         </div>
       </footer>
     </main>
 
-    <!-- Theme script -->
+    <!-- SAME theme script as index -->
     <script>
       (function () {
-        const root = document.documentElement;
+        const root = document.documentElement; // <html>
         const toggleBtn = document.getElementById("theme-toggle");
         const mql =
           window.matchMedia &&
           window.matchMedia("(prefers-color-scheme: dark)");
+
         const saved = localStorage.getItem("theme");
 
         const applyTheme = (theme) => {
@@ -213,10 +140,13 @@
           applyTheme(next);
         });
 
-        const mqlListener = () => applyTheme(null);
         if (mql && (saved === null || saved === undefined)) {
-          mql.addEventListener("change", mqlListener);
+          mql.addEventListener("change", () => applyTheme(null));
         }
+
+        // footer year
+        const y = document.getElementById("year");
+        if (y) y.textContent = new Date().getFullYear();
       })();
     </script>
   </body>
