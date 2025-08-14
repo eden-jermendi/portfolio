@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,11 +33,23 @@
                 />
               </svg>
             </a>
+
             <ul>
               <li><a href="#welcome-section">About</a></li>
               <li><a href="#projects">Projects</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
+
+            <!-- Theme toggle -->
+            <button
+              id="theme-toggle"
+              class="theme-toggle"
+              type="button"
+              aria-label="Toggle color theme"
+              title="Toggle theme"
+            >
+              <span class="theme-toggle__icon" aria-hidden="true">🌙</span>
+            </button>
           </nav>
         </div>
       </header>
@@ -152,5 +164,62 @@
         </div>
       </footer>
     </main>
+
+    <!-- Theme script: honors system, allows toggle, persists choice -->
+    <script>
+      (function () {
+        const root = document.documentElement; // <html>
+        const toggleBtn = document.getElementById("theme-toggle");
+        const mql =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)");
+
+        // read saved choice: "light" | "dark" | null (system)
+        const saved = localStorage.getItem("theme");
+
+        // set theme helper
+        const applyTheme = (theme) => {
+          if (theme === "light" || theme === "dark") {
+            root.setAttribute("data-theme", theme);
+            toggleBtn.querySelector(".theme-toggle__icon").textContent =
+              theme === "dark" ? "☀️" : "🌙";
+            toggleBtn.setAttribute(
+              "aria-label",
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            );
+          } else {
+            // system mode (no explicit choice): remove attribute so CSS @media can kick in
+            root.removeAttribute("data-theme");
+            const systemDark = mql && mql.matches;
+            toggleBtn.querySelector(".theme-toggle__icon").textContent =
+              systemDark ? "☀️" : "🌙";
+            toggleBtn.setAttribute(
+              "aria-label",
+              systemDark ? "Switch to light mode" : "Switch to dark mode"
+            );
+          }
+        };
+
+        // initialize
+        if (saved === "light" || saved === "dark") {
+          applyTheme(saved);
+        } else {
+          applyTheme(null); // follow system
+        }
+
+        // handle toggle clicks
+        toggleBtn.addEventListener("click", () => {
+          const current = root.getAttribute("data-theme"); // "light" | "dark" | null
+          const next = current === "dark" ? "light" : "dark";
+          localStorage.setItem("theme", next);
+          applyTheme(next);
+        });
+
+        // if user hasn't chosen explicitly, live-update on OS theme changes
+        if (mql && (saved === null || saved === undefined)) {
+          mql.addEventListener("change", () => applyTheme(null));
+        }
+      })();
+    </script>
   </body>
 </html>
