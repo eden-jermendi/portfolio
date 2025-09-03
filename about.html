@@ -61,21 +61,27 @@
           <h1 class="page-title">About Me</h1>
           <div class="prose">
             <p>
-              Kia ora! I'm Eden Jermendi, a self-taught developer in progress.
-              I've completed Responsive Web Design with freeCodeCamp and I'm
-              working through The Odin Project's JavaScript path, focusing on
-              modern frontend plus Node/Express.
+              Kia ora! I'm Eden Jermendi, a developer in training currently
+              studying at Dev Academy Aotearoa for the Certificate in Applied
+              Software Development. I've built a solid self-taught foundation
+              (including the Responsive Web Design cert from freeCodeCamp and
+              The Odin Project's JavaScript path), and now I'm deepening my
+              skills through full-stack, collaborative projects at bootcamp.
             </p>
             <p>
-              I'm aiming to contribute to open-source, explore backend and
-              cloud, and move into cybersecurity (especially pentesting). I like
-              building things that blend technical skill with creativity and
-              accessibility.
+              Starting in 2026, I'll be moving into the tech industry with a
+              focus on modern frontend, Node/Express, and backend systems. I'm
+              particularly interested in contributing to open-source, exploring
+              cloud technologies, and developing toward cybersecurity—especially
+              pentesting. My aim is to build tools and experiences that are
+              technically sharp, creative, and accessible.
             </p>
             <p>
-              Beyond code, I care about music production, gaming, and exploring
-              cultural history and spirituality with a critical, anti-colonial
-              lens.
+              Outside of code, I'm passionate about music production, gaming,
+              and learning from cultural history and spirituality through a
+              critical, anti-colonial lens. I bring the same curiosity and
+              determination to my creative work as I do to my development
+              journey.
             </p>
           </div>
         </div>
@@ -97,57 +103,56 @@
 
     <!-- SAME theme script as index -->
     <script>
-      (function () {
-        const root = document.documentElement; // <html>
-        const toggleBtn = document.getElementById("theme-toggle");
+      ;(function () {
+        const root = document.documentElement // <html>
+        const toggleBtn = document.getElementById('theme-toggle')
         const mql =
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)");
+          window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')
 
-        const saved = localStorage.getItem("theme");
+        const saved = localStorage.getItem('theme')
 
         const applyTheme = (theme) => {
-          if (theme === "light" || theme === "dark") {
-            root.setAttribute("data-theme", theme);
-            toggleBtn.querySelector(".theme-toggle__icon").textContent =
-              theme === "dark" ? "☀️" : "🌙";
+          if (theme === 'light' || theme === 'dark') {
+            root.setAttribute('data-theme', theme)
+            toggleBtn.querySelector('.theme-toggle__icon').textContent =
+              theme === 'dark' ? '☀️' : '🌙'
             toggleBtn.setAttribute(
-              "aria-label",
-              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-            );
+              'aria-label',
+              theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+            )
           } else {
-            root.removeAttribute("data-theme");
-            const systemDark = mql && mql.matches;
-            toggleBtn.querySelector(".theme-toggle__icon").textContent =
-              systemDark ? "☀️" : "🌙";
+            root.removeAttribute('data-theme')
+            const systemDark = mql && mql.matches
+            toggleBtn.querySelector('.theme-toggle__icon').textContent =
+              systemDark ? '☀️' : '🌙'
             toggleBtn.setAttribute(
-              "aria-label",
-              systemDark ? "Switch to light mode" : "Switch to dark mode"
-            );
+              'aria-label',
+              systemDark ? 'Switch to light mode' : 'Switch to dark mode'
+            )
           }
-        };
-
-        if (saved === "light" || saved === "dark") {
-          applyTheme(saved);
-        } else {
-          applyTheme(null);
         }
 
-        toggleBtn.addEventListener("click", () => {
-          const current = root.getAttribute("data-theme");
-          const next = current === "dark" ? "light" : "dark";
-          localStorage.setItem("theme", next);
-          applyTheme(next);
-        });
+        if (saved === 'light' || saved === 'dark') {
+          applyTheme(saved)
+        } else {
+          applyTheme(null)
+        }
+
+        toggleBtn.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme')
+          const next = current === 'dark' ? 'light' : 'dark'
+          localStorage.setItem('theme', next)
+          applyTheme(next)
+        })
 
         if (mql && (saved === null || saved === undefined)) {
-          mql.addEventListener("change", () => applyTheme(null));
+          mql.addEventListener('change', () => applyTheme(null))
         }
 
         // footer year
-        const y = document.getElementById("year");
-        if (y) y.textContent = new Date().getFullYear();
-      })();
+        const y = document.getElementById('year')
+        if (y) y.textContent = new Date().getFullYear()
+      })()
     </script>
   </body>
 </html>
