@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import AboutModal from './AboutModal';
 
 const Hero = styled.section`
   display: grid;
@@ -40,9 +41,12 @@ const Subtitle = styled.p`
   transition: color var(--ease);
 `;
 
-const AvatarLink = styled.a`
+const AvatarButton = styled.button`
   display: inline-block;
-  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   position: relative;
 `;
 
@@ -130,21 +134,25 @@ const OverlayText = styled.span`
 `;
 
 const HeroSection: React.FC = () => {
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+
   return (
     <Hero id="welcome-section">
       <HeroInner>
-        <AvatarLink href="/about">
+        <AvatarButton onClick={() => setIsAboutOpen(true)} aria-label="Open About Me modal">
           <AvatarWrap>
             <AvatarImagePlaceholder aria-hidden="true">
               EJ
             </AvatarImagePlaceholder>
-            <OverlayText>About Me</OverlayText>
+            <OverlayText aria-hidden="true">About Me</OverlayText>
           </AvatarWrap>
-        </AvatarLink>
+        </AvatarButton>
 
         <Title>Eden Jermendi's Portfolio</Title>
         <Subtitle>Welcome! Let's see if we vibe...</Subtitle>
       </HeroInner>
+
+      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
     </Hero>
   );
 };
