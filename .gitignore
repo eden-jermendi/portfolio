@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Build outputs
+dist/
+client/dist/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+*.local
+
+# PromptKit (internal)
+promptkit/

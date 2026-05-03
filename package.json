@@ -1,0 +1,27 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "This is my final project for the Responsive Web Design Certification on freeCodeCamp. The goal was to build a personal portfolio that showcases a few of my projects, includes smooth navigation, and is responsive across screen sizes.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edenjermendi/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/edenjermendi/portfolio/issues"
+  },
+  "homepage": "https://github.com/edenjermendi/portfolio#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
