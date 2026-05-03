@@ -53,10 +53,28 @@ const ProjectImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: filter 0.3s ease;
+  transition: transform 0.3s ease;
+`;
+
+const TitleOverlay = styled.div`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: radial-gradient(ellipse, rgba(14, 10, 19, 0.75) 0%, rgba(14, 10, 19, 0.3) 90%);
+  backdrop-filter: blur(3px);
+  color: ${({ theme }) => theme.textPrimary}; /* Updated from #fff */
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.4rem;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
 
   ${ImageContainer}:hover & {
-    filter: blur(4px) brightness(0.7);
+    opacity: 0;
   }
 `;
 
@@ -67,12 +85,14 @@ const HoverOverlay = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.5);
+  background: radial-gradient(ellipse, rgba(14, 10, 19, 0.9) 0%, rgba(14, 10, 19, 0.6) 90%);
+  backdrop-filter: blur(8px);
   opacity: 0;
   transition: opacity 0.3s ease;
-  color: #fff;
+  color: ${({ theme }) => theme.textPrimary}; /* Updated from #fff */
   text-align: center;
   pointer-events: none;
+  z-index: 2;
 
   ${ImageContainer}:hover & {
     opacity: 1;
@@ -87,12 +107,6 @@ const Description = styled.p`
 
 const ProjectInfo = styled.div`
   text-align: center;
-`;
-
-const ProjectTitle = styled.h3`
-  margin: 0 0 8px;
-  color: ${({ theme }) => theme.textPrimary};
-  font-size: 1.5rem;
 `;
 
 const LinkGroup = styled.div`
@@ -147,13 +161,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
               (e.target as HTMLImageElement).src = `https://placehold.co/600x400/151024/bfa8ff?text=${encodeURIComponent(title)}`;
             }}
           />
+          <TitleOverlay>{title}</TitleOverlay>
           <HoverOverlay>
             <Description>{description}</Description>
           </HoverOverlay>
         </ImageContainer>
 
         <ProjectInfo>
-          <ProjectTitle>{title}</ProjectTitle>
           <LinkGroup>
             {hasBothLinks && (
               <GitHubButton 
