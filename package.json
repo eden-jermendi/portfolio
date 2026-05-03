@@ -4,10 +4,10 @@
   "description": "This is my final project for the Responsive Web Design Certification on freeCodeCamp. The goal was to build a personal portfolio that showcases a few of my projects, includes smooth navigation, and is responsive across screen sizes.",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "dev": "concurrently \"npm run client\" \"npm run api\"",
     "client": "npm run dev --prefix client",
-    "server": "npm run dev --prefix server",
-    "build": "npm install --prefix client && npm install --prefix server && npm run build --prefix client && mkdir -p dist && cp -r client/dist/* dist/",
+    "api": "npm run dev --prefix api",
+    "build": "npm install --prefix client && npm install --prefix api && npm run build --prefix client && mkdir -p dist && cp -r client/dist/* dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
