@@ -172,8 +172,11 @@ const Contact: React.FC = () => {
     setResult("Sending...");
 
     const formData = new FormData(event.currentTarget);
-    formData.append("access_key", "2985cf06-1f54-4773-8756-3f9f2c1cb692");
-    formData.append("h-captcha-response", captchaToken);
+    
+    // CRITICAL FIX: Use .set() instead of .append() to avoid duplicate fields
+    // This prevents h-captcha-response from being sent as an Array(2)
+    formData.set("access_key", "2985cf06-1f54-4773-8756-3f9f2c1cb692");
+    formData.set("h-captcha-response", captchaToken);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -193,7 +196,8 @@ const Contact: React.FC = () => {
         }
       } else {
         setStatus("error");
-        setResult(data.message || "Something went wrong.");
+        console.error("Web3Forms Error:", data);
+        setResult(data.message || "Could not validate captcha. Please try again.");
       }
     } catch (error) {
       console.error("Form error:", error);
@@ -275,6 +279,7 @@ const Contact: React.FC = () => {
                 theme={theme === 'dark' ? 'dark' : 'light'}
                 onVerify={onCaptchaChange}
                 onExpire={() => setCaptchaToken(null)}
+                reCaptchaCompat={false}
               />
             </div>
 
