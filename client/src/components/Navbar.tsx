@@ -16,40 +16,57 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding-block: 1rem; /* Reduced from 20px */
+  padding-block: 0.75rem; /* Reduced from 1rem for a slimmer profile */
   font-family: "Fira Code", monospace;
+
+  @media (max-width: 480px) {
+    gap: 0.5rem;
+    padding-block: 0.5rem;
+  }
 `;
 
 const LogoLink = styled.a`
   display: block;
   color: ${({ theme }) => theme.textPrimary};
   transition: color var(--ease);
+  flex-shrink: 0;
 
-  svg {
-    height: 2.5rem; /* ~40px */
-    display: block;
+  span {
+    font-weight: bold;
+    font-size: 1.2rem;
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
   }
 `;
 
 const NavList = styled.ul`
   list-style: none;
   display: flex;
-  gap: 2rem; /* ~30px */
+  gap: 1.5rem; /* Reduced from 2rem */
   margin: 0;
   padding: 0;
+  align-items: center;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1rem;
+    gap: 1rem; /* Maintain horizontal flow even on mobile */
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.75rem; /* Tighter spacing for very small screens */
   }
 `;
 
-const NavItem = styled.li``;
+const NavItem = styled.li`
+  display: flex;
+  align-items: center;
+`;
 
 const NavLink = styled.a`
   color: ${({ theme }) => theme.textPrimary};
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.95rem; /* Slightly smaller for better fit */
   position: relative;
   transition: color var(--ease);
   cursor: pointer;
@@ -58,11 +75,15 @@ const NavLink = styled.a`
   padding: 0;
   font-family: inherit;
 
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+  }
+
   &::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -0.25rem;
+    bottom: -0.2rem;
     width: 0%;
     height: 2px;
     background: ${({ theme }) => theme.linkHover};
@@ -84,11 +105,17 @@ const ThemeButton = styled.button`
   border: 2px solid ${({ theme }) => theme.btnBorder};
   background: ${({ theme }) => theme.btnBg};
   color: ${({ theme }) => theme.btnText};
-  padding: 0.5rem 1rem; /* ~8px 16px */
+  padding: 0.4rem 0.8rem; /* Slimmer padding */
   border-radius: 999px;
   cursor: pointer;
   line-height: 1;
   transition: transform var(--ease), background-color var(--ease), color var(--ease), border-color var(--ease);
+  flex-shrink: 0;
+
+  @media (max-width: 480px) {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.9rem;
+  }
 
   &:hover {
     transform: translateY(-1px);
@@ -107,7 +134,7 @@ const Navbar: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) => {
       <div className="site-width">
         <Nav id="navbar" aria-label="Primary">
           <LogoLink href="/" aria-label="Eden Jermendi logo">
-            <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>EJ.</span>
+            <span>EJ.</span>
           </LogoLink>
 
           <NavList>

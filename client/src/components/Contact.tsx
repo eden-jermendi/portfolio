@@ -7,6 +7,11 @@ const ContactSection = styled.section`
   background: ${({ theme }) => theme.contactBg};
   padding-block: 4rem;
   transition: background-color var(--ease);
+  overflow: hidden; /* Prevent horizontal scroll on this section */
+
+  @media (max-width: 480px) {
+    padding-block: 3rem;
+  }
 `;
 
 const ContactContainer = styled.div`
@@ -19,6 +24,10 @@ const ContactContainer = styled.div`
     grid-template-columns: 1fr;
     gap: 3rem;
   }
+
+  @media (max-width: 480px) {
+    gap: 2.5rem;
+  }
 `;
 
 const ContactInfo = styled.div`
@@ -28,12 +37,23 @@ const ContactInfo = styled.div`
     color: ${({ theme }) => theme.linkHover};
     font-size: 2.5rem;
     margin-bottom: 1rem;
+
+    @media (max-width: 480px) {
+      font-size: 2rem;
+      text-align: center;
+    }
   }
 
   p {
     color: ${({ theme }) => theme.textAccent};
     font-size: 1.2rem;
     margin-bottom: 2.5rem;
+
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
   }
 `;
 
@@ -41,6 +61,10 @@ const ActionButtons = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+
+  @media (max-width: 480px) {
+    justify-content: center;
+  }
 `;
 
 const ContactLink = styled.a`
@@ -55,6 +79,12 @@ const ContactLink = styled.a`
   text-align: center;
   flex: 1;
   min-width: 140px;
+
+  @media (max-width: 480px) {
+    min-width: 120px;
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 
   &:hover, &:focus-visible {
     background: ${({ theme }) => theme.linkHover};
@@ -73,18 +103,27 @@ const FormWrapper = styled.div`
   border: 2px solid ${({ theme }) => theme.btnBorder};
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: border-color var(--ease), background-color var(--ease);
+  width: 100%;
+  max-width: 100%; /* Ensure it doesn't exceed container */
+  box-sizing: border-box;
+
+  @media (max-width: 480px) {
+    padding: 1.5rem; /* Reduced padding for mobile */
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  width: 100%;
 `;
 
 const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 `;
 
 const Label = styled.label`
@@ -103,6 +142,8 @@ const Input = styled.input`
   font-size: 1rem;
   font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
 
   &:focus-visible {
     outline: none;
@@ -127,6 +168,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
   transition: transform 0.3s, background-color 0.3s, filter 0.3s;
   margin-top: 0.25rem;
+  width: 100%;
 
   &:hover, &:focus-visible {
     filter: brightness(1.1);
@@ -172,9 +214,6 @@ const Contact: React.FC = () => {
     setResult("Sending...");
 
     const formData = new FormData(event.currentTarget);
-    
-    // CRITICAL FIX: Use .set() instead of .append() to avoid duplicate fields
-    // This prevents h-captcha-response from being sent as an Array(2)
     formData.set("access_key", "2985cf06-1f54-4773-8756-3f9f2c1cb692");
     formData.set("h-captcha-response", captchaToken);
 
@@ -272,7 +311,7 @@ const Contact: React.FC = () => {
             </InputGroup>
 
             {/* Official hCaptcha React Component */}
-            <div style={{ minHeight: '78px' }}>
+            <div style={{ minHeight: '78px', display: 'flex', justifyContent: 'center' }}>
               <HCaptcha
                 ref={captchaRef}
                 sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
