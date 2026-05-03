@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useTheme } from './ThemeProvider';
 
@@ -151,6 +151,23 @@ const Contact: React.FC = () => {
   const { theme } = useTheme();
   const [result, setResult] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const captchaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // In React, the hCaptcha script might run before the component is rendered.
+    // We check periodically if hcaptcha is ready and render it if the container is empty.
+    const interval = setInterval(() => {
+      if ((window as any).hcaptcha && captchaRef.current && captchaRef.current.innerHTML === "") {
+        (window as any).hcaptcha.render(captchaRef.current, {
+          sitekey: "50b2fe65-b00b-4b9e-b44b-447f53504810", // Web3Forms Standard Sitekey
+          theme: theme === 'dark' ? 'dark' : 'light',
+        });
+        clearInterval(interval);
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [theme]);
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -182,7 +199,6 @@ const Contact: React.FC = () => {
         setStatus("success");
         setResult("Message sent successfully!");
         (event.target as HTMLFormElement).reset();
-        // Reset hCaptcha if window.hcaptcha exists
         if ((window as any).hcaptcha) {
           (window as any).hcaptcha.reset();
         }
@@ -262,12 +278,12 @@ const Contact: React.FC = () => {
               />
             </InputGroup>
 
-            {/* hCaptcha Integration */}
+            {/* hCaptcha Integration Container */}
             <div 
+              ref={captchaRef}
               className="h-captcha" 
-              data-captcha="true" 
-              data-theme={theme}
-              style={{ marginBottom: '1rem' }}
+              data-captcha="true"
+              style={{ marginBottom: '1rem', minHeight: '78px' }}
             ></div>
 
             <SubmitButton type="submit" disabled={status === "submitting"}>
