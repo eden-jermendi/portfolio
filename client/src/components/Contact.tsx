@@ -315,7 +315,7 @@ const Contact: React.FC = () => {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="yourname@example.com"
+                placeholder="youremail@domain.com"
                 required
               />
             </InputGroup>
@@ -325,7 +325,7 @@ const Contact: React.FC = () => {
               <TextArea
                 id="message"
                 name="message"
-                placeholder="What's on your mind?"
+                placeholder="Write your message here..."
                 required
               />
             </InputGroup>
