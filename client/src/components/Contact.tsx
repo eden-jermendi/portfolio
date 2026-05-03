@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ContactSection = styled.section`
-  background: ${({ theme }) => theme.bgAccent};
-  padding-block: 60px;
+  background: ${({ theme }) => theme.contactBg}; /* Updated to custom contactBg */
+  padding-block: 4rem; /* ~60px */
   transition: background-color var(--ease);
 `;
 
@@ -11,7 +11,7 @@ const ContactContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: 2.5rem; /* ~40px */
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -26,7 +26,7 @@ const ContactText = styled.div`
   h2 {
     color: ${({ theme }) => theme.linkHover};
     font-size: 2.5rem;
-    margin-bottom: 16px;
+    margin-bottom: 1rem; /* ~16px */
   }
 
   p {
@@ -40,7 +40,7 @@ const ContactList = styled.address`
   font-style: normal;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.25rem; /* ~20px */
   align-items: flex-start;
 `;
 
@@ -48,7 +48,7 @@ const ContactLink = styled.a`
   color: ${({ theme }) => theme.btnText};
   text-decoration: none;
   font-size: 1.1rem;
-  padding: 12px 20px;
+  padding: 0.75rem 1.25rem; /* ~12px 20px */
   border: 2px solid ${({ theme }) => theme.btnBorder};
   border-radius: 8px;
   background: ${({ theme }) => theme.btnBg};
@@ -87,7 +87,7 @@ const Contact: React.FC = () => {
                 GitHub
               </ContactLink>
             </li>
-            <li style={{ marginTop: '20px' }}>
+            <li style={{ marginTop: '1.25rem' }}>
               <ContactLink
                 href="mailto:ejermendi@gmail.com?subject=Let's%20work%20together!"
                 aria-label="Send an email to Eden"
@@ -95,7 +95,7 @@ const Contact: React.FC = () => {
                 Email me
               </ContactLink>
             </li>
-            <li style={{ marginTop: '20px' }}>
+            <li style={{ marginTop: '1.25rem' }}>
               <ContactLink 
                 href="tel:+642102291894" 
                 aria-label="Call Eden at +64 21 022 918 94"

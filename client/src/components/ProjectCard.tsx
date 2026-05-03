@@ -12,7 +12,7 @@ interface ProjectCardProps {
 
 const CardItem = styled.li<{ $isActive: boolean }>`
   min-width: 100%;
-  padding: 10px;
+  padding: 0.75rem; /* Updated from 10px */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,7 +28,7 @@ const CardWrapper = styled.div`
   max-width: 500px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1rem; /* ~15px */
 `;
 
 const ImageContainer = styled.a`
@@ -62,7 +62,7 @@ const TitleOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 1.25rem; /* ~20px */
   background: radial-gradient(ellipse, ${({ theme }) => theme.projectOverlayCenter} 0%, ${({ theme }) => theme.projectOverlayEdge} 90%);
   backdrop-filter: blur(3px);
   color: ${({ theme }) => theme.projectOverlayText};
@@ -84,7 +84,7 @@ const HoverOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 1.25rem; /* ~20px */
   background: radial-gradient(ellipse, ${({ theme }) => theme.projectHoverCenter} 0%, ${({ theme }) => theme.projectHoverEdge} 90%);
   backdrop-filter: blur(8px);
   opacity: 0;
@@ -111,7 +111,7 @@ const ProjectInfo = styled.div`
 
 const LinkGroup = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 1rem; /* ~15px */
   justify-content: center;
   align-items: center;
 `;
@@ -121,7 +121,7 @@ const GitHubButton = styled.a`
   font-size: 0.85rem;
   color: ${({ theme }) => theme.textAccent};
   text-decoration: none;
-  padding: 6px 12px;
+  padding: 0.4rem 0.75rem; /* ~6px 12px */
   border: 1px solid ${({ theme }) => theme.textAccent};
   border-radius: 6px;
   transition: all 0.2s;
@@ -153,7 +153,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           tabIndex={isActive ? 0 : -1}
           aria-label={`View ${title} ${liveUrl ? 'Live' : 'on GitHub'}`}
         >
-          {/* Using a placeholder service if path is empty/not found, but keeping path logic */}
           <ProjectImage 
             src={imagePath} 
             alt={`Screenshot of ${title}`} 

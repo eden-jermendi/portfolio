@@ -1,26 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
-import AboutModal from './AboutModal'
+import React from 'react';
+import styled from 'styled-components';
 
 const Hero = styled.section`
   display: grid;
   place-items: center;
-  gap: 14px;
+  gap: 1rem;
   text-align: center;
   background: ${({ theme }) => theme.bgMain};
-  padding: 88px var(--gutter) 72px;
+  padding: 5.5rem var(--gutter) 4.5rem;
   min-height: 90vh;
   transition: background-color var(--ease);
-`
+`;
 
 const HeroInner = styled.div`
   max-width: none;
   padding-inline: 0;
   display: grid;
   place-items: center;
-  gap: 14px;
+  gap: 1rem;
   text-align: center;
-`
+`;
 
 const Title = styled.h1`
   color: ${({ theme }) => theme.linkHover};
@@ -28,9 +27,9 @@ const Title = styled.h1`
   margin: 0;
   font-weight: 700;
   letter-spacing: 0.2px;
-  padding-top: 50px;
+  padding-top: 3rem;
   transition: color var(--ease);
-`
+`;
 
 const Subtitle = styled.p`
   color: ${({ theme }) => theme.textAccent};
@@ -39,7 +38,7 @@ const Subtitle = styled.p`
   max-width: 56ch;
   opacity: 0.95;
   transition: color var(--ease);
-`
+`;
 
 const AvatarButton = styled.button`
   display: inline-block;
@@ -48,7 +47,7 @@ const AvatarButton = styled.button`
   padding: 0;
   cursor: pointer;
   position: relative;
-`
+`;
 
 const AvatarWrap = styled.div`
   position: relative;
@@ -57,7 +56,7 @@ const AvatarWrap = styled.div`
   place-items: center;
   width: clamp(160px, 22vw, 240px);
   aspect-ratio: 1/1;
-  border-radius: 42%; /* Between circle (50%) and squircle (30%) */
+  border-radius: 42%;
   background: none;
   transition: transform 0.25s ease;
 
@@ -65,12 +64,11 @@ const AvatarWrap = styled.div`
   &::before {
     content: '';
     position: absolute;
-    inset: -20px;
+    inset: -1.25rem;
     border-radius: 42%;
     background: radial-gradient(
       circle,
-      ${({ theme }) => theme.ringStart} 0%,
-      rgba(167, 116, 255, 0.25) 40%,
+      ${({ theme }) => theme.avatarGlow} 0%,
       transparent 70%
     );
     filter: blur(15px);
@@ -92,8 +90,7 @@ const AvatarImage = styled.img`
   background: ${({ theme }) => theme.avatarBg};
   object-fit: cover;
   object-position: center;
-  /* Subtly soften the transition between image and glow */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1); 
   transition:
     transform 0.25s var(--ease),
     filter 0.25s var(--ease);
@@ -126,17 +123,15 @@ const OverlayText = styled.span`
   }
 `;
 
-const HeroSection: React.FC<{ onAboutClick: () => void }> = ({
-  onAboutClick,
-}) => {
+const HeroSection: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) => {
   return (
     <Hero id="welcome-section">
       <HeroInner>
         <AvatarButton onClick={onAboutClick} aria-label="Open About Me modal">
           <AvatarWrap>
-            <AvatarImage
-              src="/images/Eden Jermendi Headshot.png"
-              alt="Eden Jermendi"
+            <AvatarImage 
+              src="/images/Eden Jermendi Headshot.png" 
+              alt="Eden Jermendi" 
             />
             <OverlayText aria-hidden="true">About Me</OverlayText>
           </AvatarWrap>
@@ -146,7 +141,7 @@ const HeroSection: React.FC<{ onAboutClick: () => void }> = ({
         <Subtitle>Welcome! Let's see if we vibe...</Subtitle>
       </HeroInner>
     </Hero>
-  )
-}
+  );
+};
 
-export default HeroSection
+export default HeroSection;

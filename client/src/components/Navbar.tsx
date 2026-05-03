@@ -15,8 +15,8 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 14px;
-  padding-block: 20px;
+  gap: 1rem;
+  padding-block: 1rem; /* Reduced from 20px */
   font-family: "Fira Code", monospace;
 `;
 
@@ -26,7 +26,7 @@ const LogoLink = styled.a`
   transition: color var(--ease);
 
   svg {
-    height: 40px;
+    height: 2.5rem; /* ~40px */
     display: block;
   }
 `;
@@ -34,13 +34,13 @@ const LogoLink = styled.a`
 const NavList = styled.ul`
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 2rem; /* ~30px */
   margin: 0;
   padding: 0;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem;
   }
 `;
 
@@ -62,7 +62,7 @@ const NavLink = styled.a`
     content: "";
     position: absolute;
     left: 0;
-    bottom: -4px;
+    bottom: -0.25rem;
     width: 0%;
     height: 2px;
     background: ${({ theme }) => theme.linkHover};
@@ -84,7 +84,7 @@ const ThemeButton = styled.button`
   border: 2px solid ${({ theme }) => theme.btnBorder};
   background: ${({ theme }) => theme.btnBg};
   color: ${({ theme }) => theme.btnText};
-  padding: 8px 12px;
+  padding: 0.5rem 1rem; /* ~8px 16px */
   border-radius: 999px;
   cursor: pointer;
   line-height: 1;
@@ -107,7 +107,6 @@ const Navbar: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) => {
       <div className="site-width">
         <Nav id="navbar" aria-label="Primary">
           <LogoLink href="/" aria-label="Eden Jermendi logo">
-            {/* Placeholder Logo Text to maintain simplicity as requested */}
             <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>EJ.</span>
           </LogoLink>
 

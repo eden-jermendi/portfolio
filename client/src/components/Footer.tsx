@@ -6,7 +6,7 @@ const FooterWrapper = styled.footer`
   border-top: 2px solid ${({ theme }) => theme.linkHover};
   color: ${({ theme }) => theme.textPrimary};
   font-family: "Fira Code", monospace;
-  padding-block: 40px;
+  padding-block: 1.5rem; /* Reduced from 2.5rem */
   text-align: center;
   transition: background-color var(--ease), color var(--ease), border-color var(--ease);
 `;
@@ -15,7 +15,7 @@ const FooterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 1.25rem; /* ~20px */
 `;
 
 const FooterText = styled.p`
@@ -29,11 +29,11 @@ const FooterText = styled.p`
 
 const FooterLinks = styled.div`
   display: flex;
-  gap: 30px;
+  gap: 2rem; /* ~30px */
   
   @media (max-width: 480px) {
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem;
   }
 `;
 

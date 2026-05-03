@@ -20,11 +20,13 @@ export const lightTheme = {
   veilStrong: '0.80',
   veilSoft: '0.60',
   tileInk: '#7a7f88',
+  contactBg: '#e6d5ff',
+  avatarGlow: 'rgba(167, 116, 255, 0.4)', // Light lavender glow for light mode
   // Project Card Specific (Light Mode)
-  projectOverlayCenter: 'rgba(78, 62, 115, 0.5)', /* Deeper smoky lavender */
+  projectOverlayCenter: 'rgba(78, 62, 115, 0.5)',
   projectOverlayEdge: 'rgba(100, 85, 140, 0.15)',
-  projectOverlayText: '#faf8ff', // Very light lavender almost white
-  projectHoverCenter: 'rgba(60, 45, 95, 0.8)', 
+  projectOverlayText: '#faf8ff',
+  projectHoverCenter: 'rgba(60, 45, 95, 0.8)',
   projectHoverEdge: 'rgba(80, 65, 120, 0.4)',
 };
 
@@ -50,6 +52,8 @@ export const darkTheme = {
   veilStrong: '0.45',
   veilSoft: '0.25',
   tileInk: '#b7bcd1',
+  contactBg: '#1c1730',
+  avatarGlow: 'rgba(130, 86, 255, 0.25)', // Subtle purple glow for dark mode
   // Project Card Specific (Dark Mode)
   projectOverlayCenter: 'rgba(14, 10, 19, 0.75)',
   projectOverlayEdge: 'rgba(14, 10, 19, 0.3)',
