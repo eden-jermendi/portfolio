@@ -5,27 +5,27 @@ import ProjectCard from './ProjectCard';
 const projectsData = [
   {
     title: 'Coursework Tracker',
-    description: 'Simple coursework tracker with DB and external API call.',
+    description: 'Full-stack application for managing academic progress, featuring database integration and external API synchronization.',
     githubUrl: 'https://github.com/eden-jermendi/coursework-tracker',
     liveUrl: 'https://coursework-tracker.onrender.com/',
     imagePath: '/images/projects/coursework-tracker-img.png'
   },
   {
     title: 'Weather Oracle',
-    description: 'Group project calling external API resolving and feeding into LLM api call for fun whimsical weather message.',
+    description: 'Whimsical weather utility leveraging external APIs and LLM integration to deliver personalized, AI-driven weather insights.',
     githubUrl: 'https://github.com/eden-jermendi/weather-oracle',
     liveUrl: 'https://weather-oracle-2sgu.onrender.com/',
     imagePath: '/images/projects/weather-oracle-img.png'
   },
   {
     title: 'Maramataka Calendar',
-    description: 'Feature project still in development based on Maori lunar calendar.',
+    description: 'Interactive digital calendar based on the traditional Māori lunar Maramataka (Work in Progress).',
     githubUrl: 'https://github.com/eden-jermendi/maramataka-calendar',
     imagePath: '/images/projects/maramataka-calendar-img.jpg'
   },
   {
     title: 'Delete My Instagram Comments',
-    description: 'A simple JS script to be used in dev tools to delete your own IG comments in DevTools.',
+    description: 'Automated JavaScript utility for bulk comment management via browser developer tools.',
     githubUrl: 'https://github.com/eden-jermendi/delete-my-instagram-comments',
     imagePath: '/images/projects/delete-my-insta-comments-img.jpg'
   }
