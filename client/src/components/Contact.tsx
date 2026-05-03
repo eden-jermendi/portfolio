@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useTheme } from './ThemeProvider';
 
 const ContactSection = styled.section`
   background: ${({ theme }) => theme.contactBg};
@@ -147,15 +148,26 @@ const ResultMessage = styled.p<{ $isSuccess: boolean }>`
 `;
 
 const Contact: React.FC = () => {
+  const { theme } = useTheme();
   const [result, setResult] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
+    const formData = new FormData(event.currentTarget);
+    
+    // Client-side hCaptcha validation
+    const hCaptchaResponse = formData.get("h-captcha-response");
+    if (!hCaptchaResponse) {
+      setStatus("error");
+      setResult("Please complete the captcha.");
+      return;
+    }
+
     setStatus("submitting");
     setResult("Sending...");
 
-    const formData = new FormData(event.currentTarget);
     formData.append("access_key", "2985cf06-1f54-4773-8756-3f9f2c1cb692");
 
     try {
@@ -170,6 +182,10 @@ const Contact: React.FC = () => {
         setStatus("success");
         setResult("Message sent successfully!");
         (event.target as HTMLFormElement).reset();
+        // Reset hCaptcha if window.hcaptcha exists
+        if ((window as any).hcaptcha) {
+          (window as any).hcaptcha.reset();
+        }
       } else {
         setStatus("error");
         setResult(data.message || "Something went wrong.");
@@ -245,6 +261,14 @@ const Contact: React.FC = () => {
                 required 
               />
             </InputGroup>
+
+            {/* hCaptcha Integration */}
+            <div 
+              className="h-captcha" 
+              data-captcha="true" 
+              data-theme={theme}
+              style={{ marginBottom: '1rem' }}
+            ></div>
 
             <SubmitButton type="submit" disabled={status === "submitting"}>
               {status === "submitting" ? "Sending..." : "Send Message"}
