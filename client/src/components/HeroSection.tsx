@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import AboutModal from './AboutModal';
+import React from 'react'
+import styled from 'styled-components'
+import AboutModal from './AboutModal'
 
 const Hero = styled.section`
   display: grid;
@@ -11,7 +11,7 @@ const Hero = styled.section`
   padding: 88px var(--gutter) 72px;
   min-height: 90vh;
   transition: background-color var(--ease);
-`;
+`
 
 const HeroInner = styled.div`
   max-width: none;
@@ -20,7 +20,7 @@ const HeroInner = styled.div`
   place-items: center;
   gap: 14px;
   text-align: center;
-`;
+`
 
 const Title = styled.h1`
   color: ${({ theme }) => theme.linkHover};
@@ -30,7 +30,7 @@ const Title = styled.h1`
   letter-spacing: 0.2px;
   padding-top: 50px;
   transition: color var(--ease);
-`;
+`
 
 const Subtitle = styled.p`
   color: ${({ theme }) => theme.textAccent};
@@ -39,7 +39,7 @@ const Subtitle = styled.p`
   max-width: 56ch;
   opacity: 0.95;
   transition: color var(--ease);
-`;
+`
 
 const AvatarButton = styled.button`
   display: inline-block;
@@ -48,42 +48,34 @@ const AvatarButton = styled.button`
   padding: 0;
   cursor: pointer;
   position: relative;
-`;
+`
 
 const AvatarWrap = styled.div`
-  --ring-thickness: 14px;
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   display: grid;
   place-items: center;
   width: clamp(160px, 22vw, 240px);
   aspect-ratio: 1/1;
-  border-radius: 50%;
+  border-radius: 42%; /* Between circle (50%) and squircle (30%) */
   background: none;
-  box-shadow: 0 12px 28px rgba(138, 43, 226, 0.12), 0 0 0 1px rgba(138, 43, 226, 0.18);
   transition: transform 0.25s ease;
 
+  /* Stronger Diffused Back-glow */
   &::before {
-    content: "";
+    content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: linear-gradient(140deg, ${({ theme }) => theme.ringStart} 0%, #d9c3ff 45%, ${({ theme }) => theme.ringEnd} 100%);
-    -webkit-mask: radial-gradient(circle closest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness)));
-    mask: radial-gradient(circle closest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness)));
+    inset: -20px;
+    border-radius: 42%;
+    background: radial-gradient(
+      circle,
+      ${({ theme }) => theme.ringStart} 0%,
+      rgba(167, 116, 255, 0.25) 40%,
+      transparent 70%
+    );
+    filter: blur(15px);
     z-index: 0;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: -12px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(167, 116, 255, 0.18), transparent 65%);
-    filter: blur(10px);
-    pointer-events: none;
-    z-index: 0;
+    opacity: 0.8;
   }
 
   &:hover {
@@ -91,19 +83,20 @@ const AvatarWrap = styled.div`
   }
 `;
 
-const AvatarImagePlaceholder = styled.div`
+const AvatarImage = styled.img`
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  border-radius: 42%;
   background: ${({ theme }) => theme.avatarBg};
-  display: grid;
-  place-items: center;
-  font-size: 2rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.textAccent};
-  transition: transform 0.25s var(--ease), filter 0.25s var(--ease);
+  object-fit: cover;
+  object-position: center;
+  /* Subtly soften the transition between image and glow */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+  transition:
+    transform 0.25s var(--ease),
+    filter 0.25s var(--ease);
 
   ${AvatarWrap}:hover & {
     filter: grayscale(0.15) brightness(0.9);
@@ -114,7 +107,7 @@ const AvatarImagePlaceholder = styled.div`
 const OverlayText = styled.span`
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: 42%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,15 +126,18 @@ const OverlayText = styled.span`
   }
 `;
 
-const HeroSection: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) => {
+const HeroSection: React.FC<{ onAboutClick: () => void }> = ({
+  onAboutClick,
+}) => {
   return (
     <Hero id="welcome-section">
       <HeroInner>
         <AvatarButton onClick={onAboutClick} aria-label="Open About Me modal">
           <AvatarWrap>
-            <AvatarImagePlaceholder aria-hidden="true">
-              EJ
-            </AvatarImagePlaceholder>
+            <AvatarImage
+              src="/images/Eden Jermendi Headshot.png"
+              alt="Eden Jermendi"
+            />
             <OverlayText aria-hidden="true">About Me</OverlayText>
           </AvatarWrap>
         </AvatarButton>
@@ -150,7 +146,7 @@ const HeroSection: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) =
         <Subtitle>Welcome! Let's see if we vibe...</Subtitle>
       </HeroInner>
     </Hero>
-  );
-};
+  )
+}
 
-export default HeroSection;
+export default HeroSection
