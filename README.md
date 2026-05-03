@@ -4,7 +4,7 @@ A modern full-stack developer portfolio built to showcase projects, technical gr
 
 Originally created as a freeCodeCamp Responsive Web Design project, this application has since been rebuilt and expanded into a TypeScript-based full-stack app with a React frontend and Express backend for future integrations.
 
-**Live Deployment:** Hosted on Vercel.
+**Live Deployment:** Hosted on [Vercel.](https://edenjermendi.com/)
 
 ## Tech Stack
 
