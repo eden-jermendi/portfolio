@@ -1,17 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { useTheme } from './ThemeProvider';
-
-// Proper TypeScript declaration for hCaptcha
-declare global {
-  interface Window {
-    hcaptcha?: {
-      render: (container: HTMLElement, options: any) => string;
-      reset: (widgetId?: any) => void;
-      getResponse: (widgetId?: any) => string;
-    };
-  }
-}
 
 const ContactSection = styled.section`
   background: ${({ theme }) => theme.contactBg};
@@ -162,60 +152,17 @@ const Contact: React.FC = () => {
   const { theme } = useTheme();
   const [result, setResult] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const captchaRef = useRef<HTMLDivElement>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const captchaRef = useRef<HCaptcha>(null);
 
-  useEffect(() => {
-    // Load script if not already present
-    let script = document.querySelector('script[src="https://web3forms.com/client/script.js"]') as HTMLScriptElement;
-    
-    if (!script) {
-      script = document.createElement("script");
-      script.src = "https://web3forms.com/client/script.js";
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
-    }
-
-    const renderCaptcha = () => {
-      if (window.hcaptcha && captchaRef.current) {
-        // Clear existing content to prevent duplicates or stale themes
-        captchaRef.current.innerHTML = "";
-        window.hcaptcha.render(captchaRef.current, {
-          sitekey: "50b2fe65-b00b-4b9e-b44b-447f53504810",
-          theme: theme === 'dark' ? 'dark' : 'light',
-        });
-      }
-    };
-
-    // Resilient rendering logic
-    const timer = setTimeout(() => {
-      if (window.hcaptcha) {
-        renderCaptcha();
-      } else {
-        const interval = setInterval(() => {
-          if (window.hcaptcha) {
-            renderCaptcha();
-            clearInterval(interval);
-          }
-        }, 300);
-        return () => clearInterval(interval);
-      }
-    }, 100);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [theme]); // Triggered every time theme changes
+  const onCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
+  };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
-    const formData = new FormData(event.currentTarget);
-    
-    // Logic to get response from either standard Web3Forms field or hcaptcha global
-    const hCaptchaResponse = formData.get("h-captcha-response") || (window.hcaptcha ? window.hcaptcha.getResponse() : "");
-    
-    if (!hCaptchaResponse) {
+    if (!captchaToken) {
       setStatus("error");
       setResult("Please complete the captcha.");
       return;
@@ -224,7 +171,9 @@ const Contact: React.FC = () => {
     setStatus("submitting");
     setResult("Sending...");
 
+    const formData = new FormData(event.currentTarget);
     formData.append("access_key", "2985cf06-1f54-4773-8756-3f9f2c1cb692");
+    formData.append("h-captcha-response", captchaToken);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -238,8 +187,9 @@ const Contact: React.FC = () => {
         setStatus("success");
         setResult("Message sent successfully!");
         (event.target as HTMLFormElement).reset();
-        if (window.hcaptcha) {
-          window.hcaptcha.reset();
+        setCaptchaToken(null);
+        if (captchaRef.current) {
+          captchaRef.current.resetCaptcha();
         }
       } else {
         setStatus("error");
@@ -317,12 +267,16 @@ const Contact: React.FC = () => {
               />
             </InputGroup>
 
-            {/* hCaptcha Integration Container */}
-            <div 
-              ref={captchaRef}
-              className="h-captcha" 
-              style={{ minHeight: '78px' }}
-            ></div>
+            {/* Official hCaptcha React Component */}
+            <div style={{ minHeight: '78px' }}>
+              <HCaptcha
+                ref={captchaRef}
+                sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+                theme={theme === 'dark' ? 'dark' : 'light'}
+                onVerify={onCaptchaChange}
+                onExpire={() => setCaptchaToken(null)}
+              />
+            </div>
 
             <SubmitButton type="submit" disabled={status === "submitting"}>
               {status === "submitting" ? "Sending..." : "Send Message"}
