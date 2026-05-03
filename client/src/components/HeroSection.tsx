@@ -133,13 +133,11 @@ const OverlayText = styled.span`
   }
 `;
 
-const HeroSection: React.FC = () => {
-  const [isAboutOpen, setIsAboutOpen] = useState(false);
-
+const HeroSection: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) => {
   return (
     <Hero id="welcome-section">
       <HeroInner>
-        <AvatarButton onClick={() => setIsAboutOpen(true)} aria-label="Open About Me modal">
+        <AvatarButton onClick={onAboutClick} aria-label="Open About Me modal">
           <AvatarWrap>
             <AvatarImagePlaceholder aria-hidden="true">
               EJ
@@ -151,8 +149,6 @@ const HeroSection: React.FC = () => {
         <Title>Eden Jermendi's Portfolio</Title>
         <Subtitle>Welcome! Let's see if we vibe...</Subtitle>
       </HeroInner>
-
-      <AboutModal isOpen={isAboutOpen} onClose={() => setIsAboutOpen(false)} />
     </Hero>
   );
 };

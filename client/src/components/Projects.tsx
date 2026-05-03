@@ -4,24 +4,30 @@ import ProjectCard from './ProjectCard';
 
 const projectsData = [
   {
-    title: 'Technical Documentation',
-    description: 'Technical documentation page project',
-    link: 'https://eden-jermendi.github.io/technical-doc/',
+    title: 'Coursework Tracker',
+    description: 'Simple coursework tracker with DB and external API call.',
+    githubUrl: 'https://github.com/eden-jermendi/coursework-tracker',
+    liveUrl: 'https://coursework-tracker.onrender.com/',
+    imagePath: '/images/projects/coursework-tracker.png'
   },
   {
-    title: 'Product Landing',
-    description: 'Product landing page project',
-    link: 'https://eden-jermendi.github.io/product-landing-page/',
+    title: 'Weather Oracle',
+    description: 'Group project calling external API resolving and feeding into LLM api call for fun whimsical weather message.',
+    githubUrl: 'https://github.com/eden-jermendi/weather-oracle',
+    liveUrl: 'https://weather-oracle-2sgu.onrender.com/',
+    imagePath: '/images/projects/weather-oracle.png'
   },
   {
-    title: 'Rock Paper Scissors',
-    description: 'Interactive game project',
-    link: 'https://eden-jermendi.github.io/paper-scissors-rock/',
+    title: 'Maramataka Calendar',
+    description: 'Feature project still in development based on Maori lunar calendar.',
+    githubUrl: 'https://github.com/eden-jermendi/maramataka-calendar',
+    imagePath: '/images/projects/maramataka.png'
   },
   {
-    title: 'Calculator',
-    description: 'Made using Vanilla JS, HTML and CSS',
-    link: 'https://eden-jermendi.github.io/calculator/',
+    title: 'Delete My Instagram Comments',
+    description: 'A simple JS script to be used in dev tools to delete your own IG comments in DevTools.',
+    githubUrl: 'https://github.com/eden-jermendi/delete-my-instagram-comments',
+    imagePath: '/images/projects/delete-ig-comments.png'
   }
 ];
 
@@ -60,14 +66,17 @@ const ControlButton = styled.button`
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  font-family: "Fira Code", monospace;
+  transition: all 0.2s;
   
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.3;
     cursor: not-allowed;
   }
   
   &:hover:not(:disabled) {
     background: ${({ theme }) => theme.linkHover};
+    border-color: ${({ theme }) => theme.linkHover};
     color: white;
   }
 `;
@@ -76,6 +85,8 @@ const ProjectCounter = styled.span`
   font-family: "Fira Code", monospace;
   font-size: 0.9rem;
   color: ${({ theme }) => theme.textPrimary};
+  min-width: 60px;
+  text-align: center;
 `;
 
 const Projects: React.FC = () => {

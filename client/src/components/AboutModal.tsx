@@ -26,7 +26,7 @@ const ModalContent = styled.article`
   color: ${({ theme }) => theme.textPrimary};
   max-width: 700px;
   width: 100%;
-  max-height: 80vh;
+  max-height: 70vh; /* Reduced from 80vh */
   border-radius: 20px;
   border: 2px solid ${({ theme }) => theme.linkHover};
   position: relative;
@@ -50,7 +50,8 @@ const ModalContent = styled.article`
 
 const ScrollArea = styled.div`
   overflow-y: auto;
-  padding: 40px;
+  padding: 0 40px 40px 40px; 
+  margin: 60px 25px 20px 25px; /* Added 25px horizontal margins to pull scrollbar inward */
   height: 100%;
 
   /* Custom Scrollbar */
@@ -65,12 +66,6 @@ const ScrollArea = styled.div`
     border-radius: 10px;
     border: 4px solid ${({ theme }) => theme.bgMain};
     background-clip: content-box;
-  }
-
-  &::before, &::after {
-    content: "";
-    display: block;
-    height: 10px;
   }
 `;
 

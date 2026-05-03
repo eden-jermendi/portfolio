@@ -52,6 +52,11 @@ const NavLink = styled.a`
   font-size: 1rem;
   position: relative;
   transition: color var(--ease);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
 
   &::after {
     content: "";
@@ -94,7 +99,7 @@ const ThemeButton = styled.button`
   }
 `;
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) => {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -108,7 +113,15 @@ const Navbar: React.FC = () => {
 
           <NavList>
             <NavItem>
-              <NavLink href="/about">About</NavLink>
+              <NavLink 
+                as="button" 
+                onClick={(e: React.MouseEvent) => {
+                  e.preventDefault();
+                  onAboutClick();
+                }}
+              >
+                About
+              </NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#projects">Projects</NavLink>
