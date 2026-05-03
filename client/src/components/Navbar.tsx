@@ -1,37 +1,137 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useTheme } from './ThemeProvider';
+
+const HeaderWrapper = styled.header`
+  background: ${({ theme }) => theme.bgMain};
+  border-bottom: 2px solid ${({ theme }) => theme.linkHover};
+  transition: background-color var(--ease), border-color var(--ease);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding-block: 20px;
+  font-family: "Fira Code", monospace;
+`;
+
+const LogoLink = styled.a`
+  display: block;
+  color: ${({ theme }) => theme.textPrimary};
+  transition: color var(--ease);
+
+  svg {
+    height: 40px;
+    display: block;
+  }
+`;
+
+const NavList = styled.ul`
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 15px;
+  }
+`;
+
+const NavItem = styled.li``;
+
+const NavLink = styled.a`
+  color: ${({ theme }) => theme.textPrimary};
+  text-decoration: none;
+  font-size: 1rem;
+  position: relative;
+  transition: color var(--ease);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: ${({ theme }) => theme.linkHover};
+    transition: width 0.3s ease-in-out;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    width: 100%;
+  }
+
+  &[aria-current="page"]::after {
+    width: 100%;
+  }
+`;
+
+const ThemeButton = styled.button`
+  appearance: none;
+  border: 2px solid ${({ theme }) => theme.btnBorder};
+  background: ${({ theme }) => theme.btnBg};
+  color: ${({ theme }) => theme.btnText};
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform var(--ease), background-color var(--ease), color var(--ease), border-color var(--ease);
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
 
 const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header>
+    <HeaderWrapper>
       <div className="site-width">
-        <nav id="navbar" aria-label="Primary">
-          <a href="/" className="logo" aria-label="Eden Jermendi logo">
-            LOGO
-          </a>
+        <Nav id="navbar" aria-label="Primary">
+          <LogoLink href="/" aria-label="Eden Jermendi logo">
+            {/* Placeholder Logo Text to maintain simplicity as requested */}
+            <span style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>EJ.</span>
+          </LogoLink>
 
-          <ul>
-            <li><a href="/about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
+          <NavList>
+            <NavItem>
+              <NavLink href="/about">About</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#projects">Projects</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#contact">Contact</NavLink>
+            </NavItem>
+          </NavList>
 
-          <button
+          <ThemeButton
             id="theme-toggle"
-            className="theme-toggle"
             type="button"
             onClick={toggleTheme}
-            aria-label="Toggle color theme"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title="Toggle theme"
           >
-            <span className="theme-toggle__icon" aria-hidden="true">
+            <span aria-hidden="true">
               {theme === 'dark' ? '☀️' : '🌙'}
             </span>
-          </button>
-        </nav>
+          </ThemeButton>
+        </Nav>
       </div>
-    </header>
+    </HeaderWrapper>
   );
 };
 

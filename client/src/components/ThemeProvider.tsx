@@ -1,4 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from '../theme';
+import { GlobalStyles } from './GlobalStyles';
 
 type Theme = 'light' | 'dark';
 
@@ -13,7 +16,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
-    // Sync with blocking script's result
     const saved = localStorage.getItem('theme') as Theme | null;
     const mql = window.matchMedia('(prefers-color-scheme: dark)');
     
@@ -29,9 +31,14 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     document.documentElement.setAttribute('data-theme', next);
   };
 
+  const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
+
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <StyledThemeProvider theme={currentTheme}>
+        <GlobalStyles />
+        {children}
+      </StyledThemeProvider>
     </ThemeContext.Provider>
   );
 };
