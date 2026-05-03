@@ -2,6 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useTheme } from './ThemeProvider';
 
+// Proper TypeScript declaration for hCaptcha
+declare global {
+  interface Window {
+    hcaptcha?: {
+      render: (container: HTMLElement, options: any) => string;
+      reset: (widgetId?: any) => void;
+      getResponse: (widgetId?: any) => string;
+    };
+  }
+}
+
 const ContactSection = styled.section`
   background: ${({ theme }) => theme.contactBg};
   padding-block: 4rem;
@@ -125,7 +136,7 @@ const SubmitButton = styled.button`
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.3s, background-color 0.3s, filter 0.3s;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 
   &:hover, &:focus-visible {
     filter: brightness(1.1);
@@ -154,29 +165,56 @@ const Contact: React.FC = () => {
   const captchaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // In React, the hCaptcha script might run before the component is rendered.
-    // We check periodically if hcaptcha is ready and render it if the container is empty.
-    const interval = setInterval(() => {
-      if ((window as any).hcaptcha && captchaRef.current && captchaRef.current.innerHTML === "") {
-        (window as any).hcaptcha.render(captchaRef.current, {
-          sitekey: "50b2fe65-b00b-4b9e-b44b-447f53504810", // Web3Forms Standard Sitekey
-          theme: theme === 'dark' ? 'dark' : 'light',
-          hostname: "edenjermendi.com" // Explicitly set hostname to avoid localhost detection issues
-        });
-        clearInterval(interval);
-      }
-    }, 500);
+    // Load script if not already present
+    let script = document.querySelector('script[src="https://web3forms.com/client/script.js"]') as HTMLScriptElement;
+    
+    if (!script) {
+      script = document.createElement("script");
+      script.src = "https://web3forms.com/client/script.js";
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    }
 
-    return () => clearInterval(interval);
-  }, [theme]);
+    const renderCaptcha = () => {
+      if (window.hcaptcha && captchaRef.current) {
+        // Clear existing content to prevent duplicates or stale themes
+        captchaRef.current.innerHTML = "";
+        window.hcaptcha.render(captchaRef.current, {
+          sitekey: "50b2fe65-b00b-4b9e-b44b-447f53504810",
+          theme: theme === 'dark' ? 'dark' : 'light',
+        });
+      }
+    };
+
+    // Resilient rendering logic
+    const timer = setTimeout(() => {
+      if (window.hcaptcha) {
+        renderCaptcha();
+      } else {
+        const interval = setInterval(() => {
+          if (window.hcaptcha) {
+            renderCaptcha();
+            clearInterval(interval);
+          }
+        }, 300);
+        return () => clearInterval(interval);
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [theme]); // Triggered every time theme changes
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
     const formData = new FormData(event.currentTarget);
     
-    // Client-side hCaptcha validation
-    const hCaptchaResponse = formData.get("h-captcha-response");
+    // Logic to get response from either standard Web3Forms field or hcaptcha global
+    const hCaptchaResponse = formData.get("h-captcha-response") || (window.hcaptcha ? window.hcaptcha.getResponse() : "");
+    
     if (!hCaptchaResponse) {
       setStatus("error");
       setResult("Please complete the captcha.");
@@ -200,8 +238,8 @@ const Contact: React.FC = () => {
         setStatus("success");
         setResult("Message sent successfully!");
         (event.target as HTMLFormElement).reset();
-        if ((window as any).hcaptcha) {
-          (window as any).hcaptcha.reset();
+        if (window.hcaptcha) {
+          window.hcaptcha.reset();
         }
       } else {
         setStatus("error");
@@ -283,8 +321,7 @@ const Contact: React.FC = () => {
             <div 
               ref={captchaRef}
               className="h-captcha" 
-              data-captcha="true"
-              style={{ marginBottom: '1rem', minHeight: '78px' }}
+              style={{ minHeight: '78px' }}
             ></div>
 
             <SubmitButton type="submit" disabled={status === "submitting"}>
