@@ -63,9 +63,9 @@ const TitleOverlay = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: radial-gradient(ellipse, rgba(14, 10, 19, 0.75) 0%, rgba(14, 10, 19, 0.3) 90%);
+  background: radial-gradient(ellipse, ${({ theme }) => theme.projectOverlayCenter} 0%, ${({ theme }) => theme.projectOverlayEdge} 90%);
   backdrop-filter: blur(3px);
-  color: ${({ theme }) => theme.textPrimary}; /* Updated from #fff */
+  color: ${({ theme }) => theme.projectOverlayText};
   text-align: center;
   font-weight: bold;
   font-size: 1.4rem;
@@ -85,11 +85,11 @@ const HoverOverlay = styled.div`
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: radial-gradient(ellipse, rgba(14, 10, 19, 0.9) 0%, rgba(14, 10, 19, 0.6) 90%);
+  background: radial-gradient(ellipse, ${({ theme }) => theme.projectHoverCenter} 0%, ${({ theme }) => theme.projectHoverEdge} 90%);
   backdrop-filter: blur(8px);
   opacity: 0;
   transition: opacity 0.3s ease;
-  color: ${({ theme }) => theme.textPrimary}; /* Updated from #fff */
+  color: ${({ theme }) => theme.projectOverlayText};
   text-align: center;
   pointer-events: none;
   z-index: 2;
