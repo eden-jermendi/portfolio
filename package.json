@@ -7,6 +7,7 @@
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "client": "npm run dev --prefix client",
     "server": "npm run dev --prefix server",
+    "build": "npm install --prefix client && npm install --prefix server && npm run build --prefix client && mkdir -p dist && cp -r client/dist/* dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,12 @@
   },
   "homepage": "https://github.com/edenjermendi/portfolio#readme",
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1",
+    "ts-node-dev": "^2.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
