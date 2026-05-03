@@ -272,18 +272,18 @@ const Contact: React.FC = () => {
 
           <ActionButtons aria-label="Quick contact methods">
             <ContactLink
+              href="mailto:edenjermendi@gmail.com?subject=Let's%20work%20together!"
+              aria-label="Send an email to Eden"
+            >
+              Email
+            </ContactLink>
+            <ContactLink
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/eden-jermendi"
               aria-label="Visit Eden's GitHub profile"
             >
               GitHub
-            </ContactLink>
-            <ContactLink
-              href="mailto:edenjermendi@gmail.com?subject=Let's%20work%20together!"
-              aria-label="Send an email to Eden"
-            >
-              Email
             </ContactLink>
             <ContactLink
               target="_blank"
