@@ -125,10 +125,54 @@ const GitHubButton = styled.a`
   border: 1px solid ${({ theme }) => theme.textAccent};
   border-radius: 6px;
   transition: all 0.2s;
+  cursor: pointer;
+  background: none;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 
   &:hover, &:focus-visible {
     background: ${({ theme }) => theme.textAccent};
     color: ${({ theme }) => theme.bgMain};
+  }
+`;
+
+const AboutButton = styled.button`
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  color: ${({ theme }) => theme.tileInk};
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid ${({ theme }) => theme.tileInk};
+  border-radius: 6px;
+  background: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+
+  /* Improved contrast for light mode */
+  ${({ theme }) => theme.bgMain === '#faf5ff' && `
+    color: #5a5f6b; /* Darker than tileInk (#7a7f88) but still muted */
+    border-color: #5a5f6b;
+  `}
+
+  &:hover, &:focus-visible {
+    background: ${({ theme }) => theme.tileInk};
+    color: ${({ theme }) => theme.bgMain};
+    
+    ${({ theme }) => theme.bgMain === '#faf5ff' && `
+      background: #5a5f6b;
+    `}
+  }
+
+  @media (min-width: 769px) {
+    display: none; /* Hide on desktop where hover works */
   }
 `;
 
@@ -140,8 +184,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   imagePath, 
   isActive 
 }) => {
+  const [showMobileAbout, setShowMobileAbout] = React.useState(false);
   const mainLink = liveUrl || githubUrl;
-  const hasBothLinks = liveUrl && githubUrl;
 
   return (
     <CardItem $isActive={isActive} aria-hidden={!isActive}>
@@ -161,33 +205,28 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             }}
           />
           <TitleOverlay>{title}</TitleOverlay>
-          <HoverOverlay>
+          <HoverOverlay style={showMobileAbout ? { opacity: 1, pointerEvents: 'auto' } : {}}>
             <Description>{description}</Description>
           </HoverOverlay>
         </ImageContainer>
 
         <ProjectInfo>
           <LinkGroup>
-            {hasBothLinks && (
-              <GitHubButton 
-                href={githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                tabIndex={isActive ? 0 : -1}
-              >
-                View Code
-              </GitHubButton>
-            )}
-            {!liveUrl && (
-              <GitHubButton 
-                href={githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                tabIndex={isActive ? 0 : -1}
-              >
-                GitHub
-              </GitHubButton>
-            )}
+            <AboutButton 
+              type="button"
+              onClick={() => setShowMobileAbout(!showMobileAbout)}
+              tabIndex={isActive ? 0 : -1}
+            >
+              {showMobileAbout ? 'Close' : 'About'}
+            </AboutButton>
+            <GitHubButton 
+              href={githubUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              tabIndex={isActive ? 0 : -1}
+            >
+              View Code
+            </GitHubButton>
           </LinkGroup>
         </ProjectInfo>
       </CardWrapper>
