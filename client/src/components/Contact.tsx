@@ -262,16 +262,18 @@ const Contact: React.FC = () => {
               GitHub
             </ContactLink>
             <ContactLink
-              href="mailto:ejermendi@gmail.com?subject=Let's%20work%20together!"
+              href="mailto:edenjermendi@gmail.com?subject=Let's%20work%20together!"
               aria-label="Send an email to Eden"
             >
               Email me
             </ContactLink>
             <ContactLink 
-              href="tel:+642102291894" 
-              aria-label="Call Eden at +64 21 022 918 94"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.linkedin.com/in/eden-jermendi-692895331/" 
+              aria-label="Visit Eden's LinkedIn profile"
             >
-              Call me
+              LinkedIn
             </ContactLink>
           </ActionButtons>
         </ContactInfo>
