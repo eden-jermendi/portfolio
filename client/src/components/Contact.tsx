@@ -161,6 +161,7 @@ const Contact: React.FC = () => {
         (window as any).hcaptcha.render(captchaRef.current, {
           sitekey: "50b2fe65-b00b-4b9e-b44b-447f53504810", // Web3Forms Standard Sitekey
           theme: theme === 'dark' ? 'dark' : 'light',
+          hostname: "edenjermendi.com" // Explicitly set hostname to avoid localhost detection issues
         });
         clearInterval(interval);
       }
