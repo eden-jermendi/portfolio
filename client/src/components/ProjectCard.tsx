@@ -171,8 +171,12 @@ const AboutButton = styled.button`
     `}
   }
 
-  @media (min-width: 769px) {
-    display: none; /* Hide on desktop where hover works */
+  @media (hover: hover) and (min-width: 1025px) {
+    display: none; /* Hide only on large screens that support hover */
+  }
+
+  @media (max-width: 1024px) {
+    display: flex; /* Ensure it's visible on tablets and mobile */
   }
 `;
 
