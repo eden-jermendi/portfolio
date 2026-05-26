@@ -155,6 +155,9 @@ const Navbar: React.FC<{ onAboutClick: () => void }> = ({ onAboutClick }) => {
             <NavItem>
               <NavLink href="#contact">Contact</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink href="/resume" target="_blank" rel="noopener noreferrer">CV</NavLink>
+            </NavItem>
           </NavList>
 
           <ThemeButton
