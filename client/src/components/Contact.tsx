@@ -1,122 +1,69 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import HCaptcha from '@hcaptcha/react-hcaptcha'
-import { useTheme } from './ThemeProvider'
+import { siteContent } from '../content/siteContent'
+import {
+  Button,
+  Card,
+  Container,
+  Eyebrow,
+  Section,
+  SectionDescription,
+  SectionHeader,
+  SectionTitle,
+} from './ui'
+import { useTheme } from './theme-context'
 
-const ContactSection = styled.section`
-  background: ${({ theme }) => theme.contactBg};
-  padding-block: 4rem;
-  transition: background-color var(--ease);
-  overflow: hidden; /* Prevent horizontal scroll on this section */
-
-  @media (max-width: 480px) {
-    padding-block: 3rem;
-  }
-`
-
-const ContactContainer = styled.div`
+const ContactGrid = styled(Container)`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: clamp(1.5rem, 4vw, 3rem);
   align-items: start;
 
-  @media (max-width: 968px) {
+  @media (max-width: 960px) {
     grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  @media (max-width: 480px) {
-    gap: 2.5rem;
   }
 `
 
 const ContactInfo = styled.div`
-  max-width: 500px;
-
-  h2 {
-    color: ${({ theme }) => theme.linkHover};
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-
-    @media (max-width: 480px) {
-      font-size: 2rem;
-      text-align: center;
-    }
-  }
-
-  p {
-    color: ${({ theme }) => theme.textAccent};
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
-
-    @media (max-width: 480px) {
-      font-size: 1.1rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-  }
+  display: grid;
+  gap: 1.5rem;
 `
 
-const ActionButtons = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+const Notes = styled.div`
+  display: grid;
   gap: 1rem;
+  color: ${({ theme }) => theme.text.secondary};
+`
 
-  @media (max-width: 480px) {
-    justify-content: center;
-  }
+const LinkList = styled.ul`
+  display: grid;
+  gap: 0.9rem;
 `
 
 const ContactLink = styled.a`
-  color: ${({ theme }) => theme.btnText};
-  text-decoration: none;
-  font-size: 1rem;
-  padding: 0.75rem 1.5rem;
-  border: 2px solid ${({ theme }) => theme.btnBorder};
-  border-radius: 8px;
-  background: ${({ theme }) => theme.btnBg};
-  transition:
-    transform 0.3s,
-    background-color 0.3s,
-    color 0.3s,
-    border-color 0.3s;
-  text-align: center;
-  flex: 1;
-  min-width: 140px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid ${({ theme }) => theme.border.soft};
+  border-radius: 1.1rem;
+  background: ${({ theme }) => theme.surface.overlay};
+  color: ${({ theme }) => theme.text.primary};
+  font: 500 0.9rem/1.4 var(--font-mono);
 
-  @media (max-width: 480px) {
-    min-width: 120px;
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+  span:last-child {
+    color: ${({ theme }) => theme.text.muted};
   }
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.linkHover};
-    color: white;
-    transform: translateY(-2px);
-    border-color: ${({ theme }) => theme.linkHover};
+    border-color: ${({ theme }) => theme.accent.primary};
   }
 `
 
-/* --- Form Components --- */
-
-const FormWrapper = styled.div`
-  background: ${({ theme }) => theme.bgTile};
-  padding: 2.5rem;
-  border-radius: 16px;
-  border: 2px solid ${({ theme }) => theme.btnBorder};
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition:
-    border-color var(--ease),
-    background-color var(--ease);
-  width: 100%;
-  max-width: 100%; /* Ensure it doesn't exceed container */
-  box-sizing: border-box;
-
-  @media (max-width: 480px) {
-    padding: 1.5rem; /* Reduced padding for mobile */
-  }
+const FormCard = styled(Card)`
+  padding: clamp(1.2rem, 4vw, 2rem);
 `
 
 const Form = styled.form`
@@ -134,18 +81,18 @@ const InputGroup = styled.div`
 `
 
 const Label = styled.label`
-  font-size: 0.9rem;
-  font-family: 'Fira Code', monospace;
-  color: ${({ theme }) => theme.textPrimary};
-  opacity: 0.8;
+  color: ${({ theme }) => theme.text.muted};
+  font: 500 0.82rem/1.3 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 `
 
 const Input = styled.input`
-  background: ${({ theme }) => theme.bgMain};
-  border: 2px solid ${({ theme }) => theme.btnBorder};
-  border-radius: 8px;
+  background: ${({ theme }) => theme.surface.canvas};
+  border: 1px solid ${({ theme }) => theme.border.soft};
+  border-radius: 1rem;
   padding: 0.75rem 1rem;
-  color: ${({ theme }) => theme.textPrimary};
+  color: ${({ theme }) => theme.text.primary};
   font-size: 1rem;
   font-family: inherit;
   transition:
@@ -156,8 +103,8 @@ const Input = styled.input`
 
   &:focus-visible {
     outline: none;
-    border-color: ${({ theme }) => theme.linkHover};
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.linkHover}33;
+    border-color: ${({ theme }) => theme.accent.primary};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.accent.glow};
   }
 `
 
@@ -166,46 +113,36 @@ const TextArea = styled(Input).attrs({ as: 'textarea' })`
   resize: vertical;
 `
 
-const SubmitButton = styled.button`
-  background: ${({ theme }) => theme.linkHover};
-  color: white;
-  border: 2px solid ${({ theme }) => theme.linkHover};
-  border-radius: 8px;
-  padding: 0.85rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition:
-    transform 0.3s,
-    background-color 0.3s,
-    filter 0.3s;
-  margin-top: 0.25rem;
-  width: 100%;
-
-  &:hover,
-  &:focus-visible {
-    filter: brightness(1.1);
-    transform: translateY(-2px);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
+const ResultMessage = styled.p<{ $isSuccess: boolean }>`
+  margin: 0;
+  color: ${({ $isSuccess, theme }) =>
+    $isSuccess ? theme.accent.primary : '#ff9ca8'};
+  font: 500 0.92rem/1.6 var(--font-mono);
 `
 
-const ResultMessage = styled.p<{ $isSuccess: boolean }>`
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: ${({ $isSuccess, theme }) =>
-    $isSuccess ? '#4caf50' : theme.textAccent};
-  margin-top: 1rem;
+const FormHeading = styled.h3`
+  margin: 0 0 1.25rem;
+  color: ${({ theme }) => theme.text.primary};
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+`
+
+const CaptchaWrap = styled.div`
+  min-height: 78px;
+  display: flex;
+  justify-content: center;
+`
+
+const SubmitButton = styled(Button)`
+  width: 100%;
+  margin-top: 0.25rem;
+  border: 0;
+  color: ${({ theme }) => theme.text.inverse};
 `
 
 const Contact: React.FC = () => {
   const { theme } = useTheme()
+  const { contact } = siteContent
   const [result, setResult] = useState('')
   const [status, setStatus] = useState<
     'idle' | 'submitting' | 'success' | 'error'
@@ -230,7 +167,7 @@ const Contact: React.FC = () => {
     setResult('Sending...')
 
     const formData = new FormData(event.currentTarget)
-    formData.set('access_key', '2985cf06-1f54-4773-8756-3f9f2c1cb692')
+    formData.set('access_key', contact.form.accessKey)
     formData.set('h-captcha-response', captchaToken)
 
     try {
@@ -264,103 +201,105 @@ const Contact: React.FC = () => {
   }
 
   return (
-    <ContactSection id="contact" aria-labelledby="contact-title">
-      <ContactContainer className="site-width">
+    <Section id="contact" aria-labelledby="contact-title">
+      <ContactGrid>
         <ContactInfo>
-          <h2 id="contact-title">Want to work with me?</h2>
-          <p>Let's connect and see if we vibe...</p>
+          <SectionHeader>
+            <Eyebrow>{contact.eyebrow}</Eyebrow>
+            <SectionTitle id="contact-title">{contact.title}</SectionTitle>
+            <SectionDescription>{contact.intro}</SectionDescription>
+          </SectionHeader>
 
-          <ActionButtons aria-label="Quick contact methods">
-            <ContactLink
-              href="mailto:edenjermendi@gmail.com?subject=Let's%20work%20together!"
-              aria-label="Send an email to Eden"
-            >
-              Email
-            </ContactLink>
-            <ContactLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/eden-jermendi"
-              aria-label="Visit Eden's GitHub profile"
-            >
-              GitHub
-            </ContactLink>
-            <ContactLink
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.linkedin.com/in/eden-jermendi-692895331/"
-              aria-label="Visit Eden's LinkedIn profile"
-            >
-              LinkedIn
-            </ContactLink>
-          </ActionButtons>
+          <Notes>
+            <p>
+              I am especially interested in junior developer roles, meaningful
+              collaboration, and projects that value clear thinking over noise.
+            </p>
+          </Notes>
+
+          <LinkList aria-label="Quick contact methods">
+            {contact.quickLinks.map((link) => (
+              <li key={link.href}>
+                <ContactLink
+                  href={link.href}
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={
+                    link.href.startsWith('http')
+                      ? 'noopener noreferrer'
+                      : undefined
+                  }
+                >
+                  <span>{link.label}</span>
+                  <span>{link.href.startsWith('mailto:') ? 'Direct' : 'Open'}</span>
+                </ContactLink>
+              </li>
+            ))}
+          </LinkList>
         </ContactInfo>
 
-        <FormWrapper>
-          <Form onSubmit={onSubmit}>
+        <FormCard>
+          <FormHeading>{contact.form.heading}</FormHeading>
+          <Form onSubmit={onSubmit} aria-busy={status === 'submitting'}>
             <InputGroup>
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">{contact.form.fields.nameLabel}</Label>
               <Input
                 id="name"
                 type="text"
                 name="name"
-                placeholder="Your name"
+                placeholder={contact.form.fields.namePlaceholder}
                 required
               />
             </InputGroup>
 
             <InputGroup>
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email">{contact.form.fields.emailLabel}</Label>
               <Input
                 id="email"
                 type="email"
                 name="email"
-                placeholder="youremail@domain.com"
+                placeholder={contact.form.fields.emailPlaceholder}
                 required
               />
             </InputGroup>
 
             <InputGroup>
-              <Label htmlFor="message">Message</Label>
+              <Label htmlFor="message">{contact.form.fields.messageLabel}</Label>
               <TextArea
                 id="message"
                 name="message"
-                placeholder="Write your message here..."
+                placeholder={contact.form.fields.messagePlaceholder}
                 required
               />
             </InputGroup>
 
-            {/* Official hCaptcha React Component */}
-            <div
-              style={{
-                minHeight: '78px',
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
+            <CaptchaWrap>
               <HCaptcha
                 ref={captchaRef}
-                sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+                sitekey={contact.form.hCaptchaSiteKey}
                 theme={theme === 'dark' ? 'dark' : 'light'}
                 onVerify={onCaptchaChange}
                 onExpire={() => setCaptchaToken(null)}
                 reCaptchaCompat={false}
               />
-            </div>
+            </CaptchaWrap>
 
             <SubmitButton type="submit" disabled={status === 'submitting'}>
               {status === 'submitting' ? 'Sending...' : 'Send Message'}
             </SubmitButton>
 
             {result && (
-              <ResultMessage $isSuccess={status === 'success'}>
+              <ResultMessage
+                $isSuccess={status === 'success'}
+                aria-live="polite"
+                role="status"
+              >
                 {result}
               </ResultMessage>
             )}
           </Form>
-        </FormWrapper>
-      </ContactContainer>
-    </ContactSection>
+        </FormCard>
+      </ContactGrid>
+    </Section>
   )
 }
 

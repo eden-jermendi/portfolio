@@ -1,10 +1,11 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
   :root {
     --ease: 240ms cubic-bezier(.2, .6, .2, 1);
-    --content-max: 1200px;
-    --gutter: clamp(16px, 4vw, 40px);
+    --font-sans: "Manrope", "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+    color-scheme: dark;
   }
 
   * {
@@ -17,45 +18,49 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     margin: 0;
-    font-family: Inter, system-ui, -apple-system, sans-serif;
-    background-color: ${({ theme }) => theme.bgMain};
-    color: ${({ theme }) => theme.textPrimary};
-    transition: background-color var(--ease), color var(--ease);
-    line-height: 1.5;
+    min-width: 320px;
+    font-family: var(--font-sans);
+    background:
+      radial-gradient(circle at top, ${({ theme }) => theme.accent.glow} 0%, transparent 35%),
+      linear-gradient(180deg, ${({ theme }) => theme.surface.canvas} 0%, ${({ theme }) => theme.surface.canvas} 100%);
+    color: ${({ theme }) => theme.text.primary};
+    transition: background-color var(--ease), color var(--ease), background var(--ease);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Accessibility: Visible Focus States */
   :focus-visible {
-    outline: 3px solid ${({ theme }) => theme.linkHover};
-    outline-offset: 2px;
+    outline: 2px solid ${({ theme }) => theme.accent.primary};
+    outline-offset: 3px;
   }
 
-  /* Skip Link (for keyboard users) */
   .skip-link {
     position: absolute;
-    top: -40px;
-    left: 0;
-    background: ${({ theme }) => theme.textAccent};
-    color: white;
-    padding: 8px;
+    top: 1rem;
+    left: 1rem;
     z-index: 1001;
-    transition: top 0.3s;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    background: ${({ theme }) => theme.accent.primary};
+    color: ${({ theme }) => theme.text.inverse};
+    transform: translateY(-150%);
+    transition: transform var(--ease);
   }
 
   .skip-link:focus {
-    top: 0;
+    transform: translateY(0);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    margin-top: 0;
-    line-height: 1.2;
+    margin: 0;
+    font-weight: 700;
   }
 
   a {
     color: inherit;
     text-decoration: none;
-    transition: color var(--ease);
+    transition: color var(--ease), border-color var(--ease), background-color var(--ease);
   }
 
   ul {
@@ -69,9 +74,29 @@ export const GlobalStyles = createGlobalStyle`
     display: block;
   }
 
-  .site-width {
-    max-width: var(--content-max);
-    margin-inline: auto;
-    padding-inline: var(--gutter);
+  button,
+  input,
+  textarea {
+    font: inherit;
   }
-`;
+
+  ::selection {
+    background: ${({ theme }) => theme.accent.secondary};
+    color: ${({ theme }) => theme.text.inverse};
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+`

@@ -1,50 +1,52 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from '../theme';
-import { GlobalStyles } from './GlobalStyles';
+import React, { useEffect, useMemo, useState } from 'react'
+import { ThemeProvider as StyledThemeProvider } from 'styled-components'
+import { darkTheme, lightTheme } from '../theme'
+import { GlobalStyles } from './GlobalStyles'
+import { ThemeContext, type Theme } from './theme-context'
 
-type Theme = 'light' | 'dark';
+const getInitialTheme = (): Theme => {
+  if (typeof window === 'undefined') {
+    return 'dark'
+  }
 
-interface ThemeContextType {
-  theme: Theme | null;
-  toggleTheme: () => void;
+  const savedTheme = localStorage.getItem('theme')
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    return savedTheme
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme | null>(null);
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme)
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme') as Theme | null;
-    const mql = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const initialTheme = saved || (mql.matches ? 'dark' : 'light');
-    setTheme(initialTheme);
-    document.documentElement.setAttribute('data-theme', initialTheme);
-  }, []);
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
 
-  const toggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    localStorage.setItem('theme', next);
-    document.documentElement.setAttribute('data-theme', next);
-  };
-
-  const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
+  const value = useMemo(
+    () => ({
+      theme,
+      toggleTheme: () => {
+        setTheme((currentTheme) =>
+          currentTheme === 'dark' ? 'light' : 'dark',
+        )
+      },
+    }),
+    [theme],
+  )
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <StyledThemeProvider theme={currentTheme}>
+    <ThemeContext.Provider value={value}>
+      <StyledThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
         <GlobalStyles />
         {children}
       </StyledThemeProvider>
     </ThemeContext.Provider>
-  );
-};
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) throw new Error('useTheme must be used within ThemeProvider');
-  return context;
-};
+  )
+}
