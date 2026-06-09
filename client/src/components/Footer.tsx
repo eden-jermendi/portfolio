@@ -1,109 +1,81 @@
 import React from 'react'
 import styled from 'styled-components'
+import { siteContent } from '../content/siteContent'
+import { Container } from './ui'
 
 const FooterWrapper = styled.footer`
-  background: ${({ theme }) => theme.bgFooter};
-  border-top: 2px solid ${({ theme }) => theme.linkHover};
-  color: ${({ theme }) => theme.textPrimary};
-  font-family: 'Fira Code', monospace;
-  padding-block: 1rem;
-  transition:
-    background-color var(--ease),
-    color var(--ease),
-    border-color var(--ease);
-
-  @media (max-width: 480px) {
-    padding-block: 0.75rem;
-  }
+  padding: 1.25rem 0 2rem;
 `
 
-const FooterContainer = styled.div`
+const FooterContainer = styled(Container)`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.25rem;
-
-  @media (max-width: 768px) {
-    gap: 0.5rem;
-  }
+  padding-top: 1.25rem;
+  border-top: 1px solid ${({ theme }) => theme.border.soft};
 
   @media (max-width: 480px) {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
     text-align: center;
   }
 `
 
 const FooterText = styled.p`
   margin: 0;
-  font-size: 0.9rem;
-  flex-shrink: 0;
-
-  .emoji {
-    color: #e25555;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 0.75rem;
-  }
+  color: ${({ theme }) => theme.text.muted};
+  font: 500 0.82rem/1.6 var(--font-mono);
 `
 
-const FooterLinks = styled.div`
+const FooterLinks = styled.ul`
   display: flex;
-  gap: 1.5rem;
+  gap: 0.9rem;
 
   @media (max-width: 480px) {
     gap: 0.75rem;
-    flex-direction: row; /* Forced single line */
   }
 `
 
 const StyledLink = styled.a`
-  color: ${({ theme }) => theme.textPrimary};
-  text-decoration: none;
-  font-size: 0.9rem;
-  border-bottom: 1px solid transparent;
-  transition:
-    border-color 0.3s,
-    color 0.3s;
+  color: ${({ theme }) => theme.text.secondary};
+  font: 500 0.82rem/1.4 var(--font-mono);
   white-space: nowrap;
-
-  @media (max-width: 480px) {
-    font-size: 0.75rem;
-  }
 
   &:hover,
   &:focus-visible {
-    border-bottom: 1px solid ${({ theme }) => theme.linkHover};
-    color: ${({ theme }) => theme.linkHover};
+    color: ${({ theme }) => theme.text.primary};
   }
 `
 
 const Footer: React.FC = () => {
+  const { footer } = siteContent
+
   return (
     <FooterWrapper id="footer">
-      <div className="site-width">
-        <FooterContainer>
-          <FooterText>
-            Made with <span className="emoji">♥️</span> by Eden Jermendi · ©{' '}
-            {new Date().getFullYear()}
-          </FooterText>
+      <FooterContainer>
+        <FooterText>
+          {footer.label} · © {new Date().getFullYear()}
+        </FooterText>
 
-          <FooterLinks>
-            <StyledLink
-              href="https://github.com/eden-jermendi"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub Profile"
-            >
-              GitHub
-            </StyledLink>
-            <StyledLink href="#contact" aria-label="Scroll to Contact section">
-              Contact
-            </StyledLink>
-          </FooterLinks>
-        </FooterContainer>
-      </div>
+        <FooterLinks>
+          {footer.links.map((link) => (
+            <li key={link.href}>
+              <StyledLink
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={
+                  link.href.startsWith('http')
+                    ? 'noopener noreferrer'
+                    : undefined
+                }
+              >
+                {link.label}
+              </StyledLink>
+            </li>
+          ))}
+        </FooterLinks>
+      </FooterContainer>
     </FooterWrapper>
   )
 }

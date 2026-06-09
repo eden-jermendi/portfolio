@@ -1,237 +1,176 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
+import type { Project } from '../content/projects'
+import { ButtonLink, Card } from './ui'
 
-interface ProjectCardProps {
-  title: string;
-  description: string;
-  liveUrl?: string;
-  githubUrl: string;
-  imagePath: string;
-  isActive: boolean;
-}
+const CardItem = styled.li`
+  height: 100%;
+`
 
-const CardItem = styled.li<{ $isActive: boolean }>`
-  min-width: 100%;
-  padding: 0.75rem; /* Updated from 10px */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.4s ease;
-  opacity: ${({ $isActive }) => ($isActive ? 1 : 0)};
-  visibility: ${({ $isActive }) => ($isActive ? 'visible' : 'hidden')};
-  pointer-events: ${({ $isActive }) => ($isActive ? 'auto' : 'none')};
-`;
+const CardShell = styled(Card)`
+  display: grid;
+  height: 100%;
+`
 
-const CardWrapper = styled.div`
-  width: 100%;
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* ~15px */
-`;
-
-const ImageContainer = styled.a`
-  position: relative;
+const PreviewLink = styled.a`
   display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: 12px;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 3px solid ${({ theme }) => theme.border};
-  background: ${({ theme }) => theme.bgTile};
-  transition: transform 0.3s ease, border-color 0.3s ease;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background:
+    linear-gradient(
+      180deg,
+      ${({ theme }) => theme.surface.overlay} 0%,
+      ${({ theme }) => theme.surface.elevated} 100%
+    );
+  border-bottom: 1px solid ${({ theme }) => theme.border.soft};
+`
 
-  &:hover, &:focus-visible {
-    border-color: ${({ theme }) => theme.linkHover};
-    transform: translateY(-5px);
-  }
-`;
-
-const ProjectImage = styled.img`
+const PreviewImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
-`;
+`
 
-const TitleOverlay = styled.div`
-  position: absolute;
-  inset: 0;
+const PreviewFallback = styled.div`
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  color: ${({ theme }) => theme.text.secondary};
+  font: 600 1rem/1.5 var(--font-mono);
+`
+
+const Body = styled.div`
+  display: grid;
+  gap: 1rem;
+  padding: 1.4rem;
+`
+
+const HeadingRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  padding: 1.25rem; /* ~20px */
-  background: radial-gradient(ellipse, ${({ theme }) => theme.projectOverlayCenter} 0%, ${({ theme }) => theme.projectOverlayEdge} 90%);
-  backdrop-filter: blur(3px);
-  color: ${({ theme }) => theme.projectOverlayText};
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.4rem;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 1;
+`
 
-  ${ImageContainer}:hover & {
-    opacity: 0;
-  }
-`;
+const Title = styled.h3`
+  font-size: 1.3rem;
+  letter-spacing: -0.03em;
+`
 
-const HoverOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem; /* ~20px */
-  background: radial-gradient(ellipse, ${({ theme }) => theme.projectHoverCenter} 0%, ${({ theme }) => theme.projectHoverEdge} 90%);
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  color: ${({ theme }) => theme.projectOverlayText};
-  text-align: center;
-  pointer-events: none;
-  z-index: 2;
+const Status = styled.span`
+  padding: 0.35rem 0.6rem;
+  border: 1px solid ${({ theme }) => theme.border.strong};
+  border-radius: 999px;
+  color: ${({ theme }) => theme.text.muted};
+  font: 500 0.72rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+`
 
-  ${ImageContainer}:hover & {
-    opacity: 1;
-  }
-`;
+const Summary = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.accent.primary};
+  font: 500 0.88rem/1.5 var(--font-mono);
+`
 
 const Description = styled.p`
-  font-size: 1rem;
-  line-height: 1.5;
   margin: 0;
-`;
+  color: ${({ theme }) => theme.text.secondary};
+`
 
-const ProjectInfo = styled.div`
-  text-align: center;
-`;
-
-const LinkGroup = styled.div`
+const StackList = styled.ul`
   display: flex;
-  gap: 1rem; /* ~15px */
-  justify-content: center;
-  align-items: center;
-`;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+`
 
-const GitHubButton = styled.a`
-  font-family: "Fira Code", monospace;
-  font-size: 0.85rem;
-  color: ${({ theme }) => theme.textAccent};
-  text-decoration: none;
-  padding: 0.4rem 0.75rem; /* ~6px 12px */
-  border: 1px solid ${({ theme }) => theme.textAccent};
-  border-radius: 6px;
-  transition: all 0.2s;
-  cursor: pointer;
-  background: none;
-  min-width: 100px;
+const StackItem = styled.li`
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  background: ${({ theme }) => theme.surface.subtle};
+  color: ${({ theme }) => theme.text.muted};
+  font: 500 0.72rem/1 var(--font-mono);
+`
+
+const Actions = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.2rem;
+`
 
-  &:hover, &:focus-visible {
-    background: ${({ theme }) => theme.textAccent};
-    color: ${({ theme }) => theme.bgMain};
-  }
-`;
-
-const AboutButton = styled.button`
-  font-family: "Fira Code", monospace;
-  font-size: 0.85rem;
-  color: ${({ theme }) => theme.tileInk};
-  text-decoration: none;
-  padding: 0.4rem 0.75rem;
-  border: 1px solid ${({ theme }) => theme.tileInk};
-  border-radius: 6px;
-  background: transparent;
-  transition: all 0.2s;
-  cursor: pointer;
-  min-width: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-
-  /* Improved contrast for light mode */
-  ${({ theme }) => theme.bgMain === '#faf5ff' && `
-    color: #5a5f6b; /* Darker than tileInk (#7a7f88) but still muted */
-    border-color: #5a5f6b;
-  `}
-
-  &:hover, &:focus-visible {
-    background: ${({ theme }) => theme.tileInk};
-    color: ${({ theme }) => theme.bgMain};
-    
-    ${({ theme }) => theme.bgMain === '#faf5ff' && `
-      background: #5a5f6b;
-    `}
-  }
-
-  @media (min-width: 769px) {
-    display: none; /* Hide on desktop where hover works */
-  }
-`;
-
-const ProjectCard: React.FC<ProjectCardProps> = ({ 
-  title, 
-  description, 
-  liveUrl, 
-  githubUrl, 
-  imagePath, 
-  isActive 
+const ProjectCard: React.FC<Project> = ({
+  title,
+  summary,
+  description,
+  imagePath,
+  imageAlt,
+  githubUrl,
+  liveUrl,
+  status,
+  stack,
 }) => {
-  const [showMobileAbout, setShowMobileAbout] = React.useState(false);
-  const mainLink = liveUrl || githubUrl;
+  const [imageFailed, setImageFailed] = React.useState(false)
+  const previewHref = liveUrl ?? githubUrl
 
   return (
-    <CardItem $isActive={isActive} aria-hidden={!isActive}>
-      <CardWrapper>
-        <ImageContainer 
-          href={mainLink} 
-          target="_blank" 
+    <CardItem>
+      <CardShell>
+        <PreviewLink
+          href={previewHref}
+          target="_blank"
           rel="noopener noreferrer"
-          tabIndex={isActive ? 0 : -1}
-          aria-label={`View ${title} ${liveUrl ? 'Live' : 'on GitHub'}`}
+          aria-label={`Open ${title}${liveUrl ? ' live project' : ' on GitHub'}`}
         >
-          <ProjectImage 
-            src={imagePath} 
-            alt={`Screenshot of ${title}`} 
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = `https://placehold.co/600x400/151024/bfa8ff?text=${encodeURIComponent(title)}`;
-            }}
-          />
-          <TitleOverlay>{title}</TitleOverlay>
-          <HoverOverlay style={showMobileAbout ? { opacity: 1, pointerEvents: 'auto' } : {}}>
-            <Description>{description}</Description>
-          </HoverOverlay>
-        </ImageContainer>
+          {imageFailed ? (
+            <PreviewFallback>{title}</PreviewFallback>
+          ) : (
+            <PreviewImage
+              src={imagePath}
+              alt={imageAlt}
+              loading="lazy"
+              onError={() => setImageFailed(true)}
+            />
+          )}
+        </PreviewLink>
 
-        <ProjectInfo>
-          <LinkGroup>
-            <AboutButton 
-              type="button"
-              onClick={() => setShowMobileAbout(!showMobileAbout)}
-              tabIndex={isActive ? 0 : -1}
-            >
-              {showMobileAbout ? 'Close' : 'About'}
-            </AboutButton>
-            <GitHubButton 
-              href={githubUrl} 
-              target="_blank" 
+        <Body>
+          <HeadingRow>
+            <Title>{title}</Title>
+            {status ? <Status>{status}</Status> : null}
+          </HeadingRow>
+
+          <Summary>{summary}</Summary>
+          <Description>{description}</Description>
+
+          <StackList aria-label={`${title} technology stack`}>
+            {stack.map((item) => (
+              <StackItem key={item}>{item}</StackItem>
+            ))}
+          </StackList>
+
+          <Actions>
+            {liveUrl ? (
+              <ButtonLink href={liveUrl} target="_blank" rel="noopener noreferrer">
+                Live project
+              </ButtonLink>
+            ) : null}
+            <ButtonLink
+              href={githubUrl}
+              target="_blank"
               rel="noopener noreferrer"
-              tabIndex={isActive ? 0 : -1}
+              $variant="ghost"
             >
-              View Code
-            </GitHubButton>
-          </LinkGroup>
-        </ProjectInfo>
-      </CardWrapper>
+              View code
+            </ButtonLink>
+          </Actions>
+        </Body>
+      </CardShell>
     </CardItem>
-  );
-};
+  )
+}
 
-export default ProjectCard;
+export default ProjectCard

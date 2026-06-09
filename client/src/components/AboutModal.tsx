@@ -1,138 +1,186 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef } from 'react'
+import styled from 'styled-components'
+import { siteContent } from '../content/siteContent'
 
 interface AboutModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  onClose: () => void
 }
 
-const Overlay = styled.div<{ $isOpen: boolean }>`
+const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
+  background: rgba(8, 5, 14, 0.72);
+  backdrop-filter: blur(18px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
-  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  padding: 20px;
-`;
+  padding: 1rem;
+`
 
 const ModalContent = styled.article`
-  background: ${({ theme }) => theme.bgMain};
-  color: ${({ theme }) => theme.textPrimary};
-  max-width: 700px;
+  background:
+    linear-gradient(
+      180deg,
+      ${({ theme }) => theme.surface.overlay} 0%,
+      ${({ theme }) => theme.surface.elevated} 100%
+    );
+  color: ${({ theme }) => theme.text.primary};
+  max-width: 760px;
   width: 100%;
-  max-height: 70vh; /* Reduced from 80vh */
-  border-radius: 20px;
-  border: 2px solid ${({ theme }) => theme.linkHover};
+  max-height: min(82vh, 52rem);
+  border-radius: 28px;
+  border: 1px solid ${({ theme }) => theme.border.soft};
   position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  line-height: 1.7;
+  box-shadow: ${({ theme }) => theme.shadow.hero};
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
-  h2 {
-    color: ${({ theme }) => theme.linkHover};
-    margin-bottom: 24px;
-    font-size: 2rem;
-  }
-
-  p {
-    margin-bottom: 20px;
-    font-size: 1.1rem;
-  }
-`;
+`
 
 const ScrollArea = styled.div`
   overflow-y: auto;
-  padding: 0 40px 40px 40px; 
-  margin: 60px 25px 20px 25px; /* Added 25px horizontal margins to pull scrollbar inward */
-  height: 100%;
-
-  /* Custom Scrollbar */
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.linkHover};
-    border-radius: 10px;
-    border: 4px solid ${({ theme }) => theme.bgMain};
-    background-clip: content-box;
-  }
-`;
+  padding: 1.5rem 1.5rem 1.75rem;
+`
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  color: ${({ theme }) => theme.textPrimary};
-  font-size: 1.5rem;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid ${({ theme }) => theme.border.strong};
+  border-radius: 999px;
+  background: ${({ theme }) => theme.surface.elevated};
+  color: ${({ theme }) => theme.text.primary};
+  font-size: 1.2rem;
   cursor: pointer;
-  padding: 5px;
   line-height: 1;
-  transition: color 0.2s;
   z-index: 10;
 
-  &:hover {
-    color: ${({ theme }) => theme.linkHover};
+  &:hover,
+  &:focus-visible {
+    border-color: ${({ theme }) => theme.accent.primary};
   }
-`;
+`
+
+const Header = styled.div`
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.5rem 1.5rem 0;
+`
+
+const Eyebrow = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.text.muted};
+  font: 600 0.78rem/1 var(--font-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+`
+
+const Title = styled.h2`
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+`
+
+const Copy = styled.div`
+  display: grid;
+  gap: 1rem;
+
+  p {
+    margin: 0;
+    color: ${({ theme }) => theme.text.secondary};
+    line-height: 1.8;
+  }
+`
 
 const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    if (isOpen) window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [isOpen, onClose]);
+  const modalRef = useRef<HTMLElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const previousActiveElementRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
+    if (!isOpen) {
+      return
     }
-  }, [isOpen]);
 
-  if (!isOpen) return null;
+    previousActiveElementRef.current = document.activeElement as HTMLElement
+    document.body.style.overflow = 'hidden'
+    closeButtonRef.current?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab' || !modalRef.current) {
+        return
+      }
+
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])',
+      )
+      const focusableElements = Array.from(focusable).filter(
+        (element) => !element.hasAttribute('disabled'),
+      )
+
+      if (focusableElements.length === 0) {
+        event.preventDefault()
+        return
+      }
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault()
+        lastElement.focus()
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+      previousActiveElementRef.current?.focus()
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) return null
 
   return (
-    <Overlay $isOpen={isOpen} onClick={onClose} aria-modal="true" role="dialog" aria-labelledby="about-title">
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onClose} aria-label="Close modal">×</CloseButton>
+    <Overlay
+      onClick={onClose}
+      aria-modal="true"
+      role="dialog"
+      aria-labelledby="about-title"
+      aria-describedby="about-description"
+    >
+      <ModalContent ref={modalRef} onClick={(e) => e.stopPropagation()}>
+        <CloseButton ref={closeButtonRef} onClick={onClose} aria-label="Close modal">
+          ×
+        </CloseButton>
+        <Header>
+          <Eyebrow>Background</Eyebrow>
+          <Title id="about-title">{siteContent.about.title}</Title>
+        </Header>
         <ScrollArea>
-          <h2 id="about-title">About Me</h2>
-          
-          <p>
-            Kia ora! I’m Eden Jermendi, a soon-to-be graduate of Dev Academy Aotearoa’s Certificate in Applied Software Development. I came into bootcamp with a strong self-taught foundation built through platforms like The Odin Project and freeCodeCamp, and I’m now sharpening those skills through collaborative projects, modern full-stack development, and real-world problem solving at Dev Academy.
-          </p>
-
-          <p>
-            Recently I’ve been building projects like Coursework Tracker, a productivity-focused full-stack app, and Weather Oracle, an API-driven project that deepened my backend and integration skills. I enjoy full-stack development overall, but I’m especially drawn to backend-leaning work ~ building systems with Node.js, Express, databases, APIs, and the logic that powers smooth user experiences.
-          </p>
-
-          <p>
-            As I move into the tech industry in 2026, I’m interested in open-source contribution, cloud technologies, and growing toward cybersecurity ~~ especially pentesting. My goal is to build tools and experiences that are technically sharp, creative, and genuinely accessible.
-          </p>
-
-          <p>
-            Outside of code, I’m passionate about music production, gaming, and learning through cultural history and spirituality from a critical, anti-colonial lens. I bring that same curiosity, determination, and passion into development ~ always wanting to understand how things work, how they can be improved, and what can be built next.
-          </p>
+          <Copy id="about-description">
+            {siteContent.about.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </Copy>
         </ScrollArea>
       </ModalContent>
     </Overlay>
-  );
-};
+  )
+}
 
-export default AboutModal;
+export default AboutModal
