@@ -1,8 +1,8 @@
-# Personal Portfolio Web App
+# Eden Jermendi Portfolio
 
-A modern full-stack developer portfolio built to showcase projects, technical growth, and evolving skills as a software developer.
+A redesigned full-stack developer portfolio for showcasing selected projects, technical growth, and current software development work.
 
-Originally created as a freeCodeCamp Responsive Web Design project, this application has since been rebuilt and expanded into a TypeScript-based full-stack app with a React frontend and Express backend for future integrations.
+Originally created as a freeCodeCamp Responsive Web Design project, this portfolio has since been rebuilt into a modern React and TypeScript application with a cleaner visual system, updated content structure, project cards, CV link, and an Express backend ready for future integrations.
 
 **Live Deployment:** Hosted on [Vercel.](https://edenjermendi.com/)
 
@@ -14,6 +14,8 @@ Originally created as a freeCodeCamp Responsive Web Design project, this applica
 - TypeScript (TSX)
 - HTML5
 - CSS3
+- Styled Components
+- Vite
 
 ### Backend
 
@@ -22,37 +24,42 @@ Originally created as a freeCodeCamp Responsive Web Design project, this applica
 
 ## Current Stage
 
-In active development. Current priorities are:
+Recently redesigned and actively maintained. Current priorities are:
 
-1. Refine project section descriptions for clearer presentation
-2. Implement external API integrations
-3. Restyle and polish UI/UX
+1. Keep project content current with recent work
+2. Replace the portfolio screenshot preview asset
+3. Continue small accessibility, copy, and UI polish passes
+4. Expand backend/API functionality when there is a clear use case
 
 ## Features
 
 - Responsive layout across screen sizes
-- Smooth navigation experience
-- Project showcase section
+- Redesigned single-page portfolio experience
+- Smooth section navigation
+- Project showcase with live project and source code links
+- Downloadable CV link
 - Deployed via Vercel
 - Full-stack architecture ready for expansion
 - Clean and scalable TypeScript codebase
 
 ## Planned Features
 
-- Live external API data integrations
-- Improved project filtering or categorisation
-- Enhanced animations and visual polish
-- Expanded about/contact sections
+- Updated portfolio screenshot
+- Refined project imagery
+- Live external API integrations where useful
+- Improved project filtering or categorisation if the project list grows
 - Ongoing accessibility improvements
 
 ## Purpose
 
-This project represents progression from early frontend learning into full-stack development, while serving as a central portfolio piece for future employers and collaborators.
+This project represents progression from early frontend learning into modern full-stack development, while serving as a central portfolio piece for future employers, collaborators, and project reviewers.
 
 ## Preview
 
 ![Screenshot of portfolio homepage](/client/public/images/screenshot-of-portfolio.png)
 
+Screenshot will be replaced with the latest redesigned portfolio preview.
+
 ## Status
 
-Actively maintained and iterated on.
+Live, recently redesigned, and actively maintained.
