@@ -29,6 +29,7 @@
     "ts-node-dev": "^2.0.0"
   },
   "dependencies": {
+    "codex": "^0.2.3",
     "express": "^5.2.1"
   }
 }
