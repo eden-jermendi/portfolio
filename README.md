@@ -4,6 +4,10 @@ A redesigned full-stack developer portfolio for showcasing selected projects, te
 
 Originally created as a freeCodeCamp Responsive Web Design project, this portfolio has since been rebuilt into a modern React and TypeScript application with a cleaner visual system, updated content structure, project cards, CV link, and an Express backend ready for future integrations.
 
+## Preview
+
+![Screenshot of portfolio homepage](/client/public/images/screenshot-of-portfolio.png)
+
 **Live Deployment:** Hosted on [Vercel.](https://edenjermendi.com/)
 
 ## Tech Stack
@@ -53,12 +57,6 @@ Recently redesigned and actively maintained. Current priorities are:
 ## Purpose
 
 This project represents progression from early frontend learning into modern full-stack development, while serving as a central portfolio piece for future employers, collaborators, and project reviewers.
-
-## Preview
-
-![Screenshot of portfolio homepage](/client/public/images/screenshot-of-portfolio.png)
-
-Screenshot will be replaced with the latest redesigned portfolio preview.
 
 ## Status
 
