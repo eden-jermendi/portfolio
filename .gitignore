@@ -20,3 +20,9 @@ promptkit/
 
 .antigravitycli
 
+# Next.js
+.next
+*.tsbuildinfo
+
+
+
