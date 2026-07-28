@@ -16,7 +16,7 @@ Thumbs.db
 *.local
 
 # PromptKit (internal)
-promptkit/
+promptkit
 
 .antigravitycli
 
