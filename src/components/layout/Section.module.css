@@ -1,0 +1,6 @@
+.section {
+  margin-bottom: var(--space-24);
+}
+.section:last-child {
+  margin-bottom: 0;
+}

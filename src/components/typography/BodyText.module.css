@@ -1,0 +1,17 @@
+.bodyText {
+  margin: 0;
+  font-size: var(--font-size-body);
+  line-height: var(--leading-prose);
+}
+
+.primary {
+  color: var(--text-primary);
+}
+
+.secondary {
+  color: var(--text-secondary);
+}
+
+.muted {
+  color: var(--text-muted);
+}

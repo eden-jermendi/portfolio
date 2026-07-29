@@ -1,0 +1,20 @@
+.link {
+  color: var(--accent-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border-subtle);
+  text-underline-offset: 4px;
+  transition: color var(--duration-normal) var(--ease-snappy),
+              text-decoration-color var(--duration-normal) var(--ease-snappy);
+}
+
+.link:hover, .link:focus-visible {
+  color: var(--text-primary);
+  text-decoration-color: var(--accent-primary);
+}
+
+.externalIcon {
+  display: inline-block;
+  margin-left: 0.25em;
+  font-size: 0.85em;
+  opacity: 0.7;
+}

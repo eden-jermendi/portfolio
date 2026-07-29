@@ -1,0 +1,29 @@
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.preview:last-child {
+  border-bottom: none;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.metadata {
+  margin-top: var(--space-2);
+}
+
+.abstract {
+  max-width: var(--container-max-measure);
+  margin-top: var(--space-2);
+}
+
+.footer {
+  margin-top: var(--space-2);
+}

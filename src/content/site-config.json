@@ -1,0 +1,18 @@
+{
+  "title": "Eden Jermendi | Full-stack System's Oriented Developer",
+  "description": "Certified full stack developer with a strong interest in backend, infrastructure, and systems engineering.",
+  "baseUrl": "https://edenjermendi.com",
+  "author": "Eden Jermendi",
+  "navigation": [
+    {
+      "label": "Projects",
+      "href": "/projects",
+      "isExternal": false
+    },
+    {
+      "label": "GitHub",
+      "href": "https://github.com/eden-jermendi",
+      "isExternal": true
+    }
+  ]
+}

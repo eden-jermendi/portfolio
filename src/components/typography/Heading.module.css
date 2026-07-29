@@ -1,0 +1,25 @@
+.heading {
+  margin: 0;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--leading-tight);
+}
+
+.h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--leading-snappy);
+}
+
+.h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--leading-snappy);
+}
+
+.h4, .h5, .h6 {
+  font-size: var(--font-size-body);
+  line-height: var(--leading-snappy);
+}
