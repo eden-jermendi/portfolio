@@ -1,0 +1,2 @@
+// Content Collections Placeholder
+export {};
