@@ -17,6 +17,10 @@ const mono = IBM_Plex_Mono({
   variable: '--font-mono',
 })
 
+import { getSiteConfig } from '@/lib/content-parser'
+import { FractalSystemProvider } from '@/components/providers/FractalSystemProvider'
+import { LiveBackground } from '@/components/ui/LiveBackground'
+
 export const metadata: Metadata = {
   title: "Eden Jermendi | Full-stack System's Oriented Developer",
   description: "Backend-leaning full-stack developer. I build resilient, thoughtful software with a focus on good structure, useful interfaces, and code that feels deliberate rather than flashy.",
@@ -27,15 +31,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { author } = getSiteConfig();
+
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <body>
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <Footer />
+        <FractalSystemProvider>
+          <LiveBackground />
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', flex: 1 }}>
+            <SiteHeader />
+            <main id="main">{children}</main>
+            <Footer author={author} />
+          </div>
+        </FractalSystemProvider>
       </body>
     </html>
   )
