@@ -1,0 +1,38 @@
+.header {
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+
+.navInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.nameplate {
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.primaryNav {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navLink {
+  color: var(--text-secondary);
+  font-size: var(--font-size-caption);
+  text-decoration: none;
+  font-family: var(--font-mono);
+}
+
+.navLink:hover,
+.navLink:focus-visible {
+  color: var(--text-primary);
+}

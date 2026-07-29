@@ -16,7 +16,7 @@
 .itemGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 0;
 }
 
 .label {

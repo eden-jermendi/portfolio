@@ -12,6 +12,7 @@ interface ProjectPreviewData {
   role?: string;
   stack: string[];
   slug: string;
+  demoUrl?: string;
 }
 
 interface ProjectPreviewProps {
@@ -40,6 +41,11 @@ export function ProjectPreview({ project, className = '' }: ProjectPreviewProps)
         </BodyText>
       </div>
       <div className={styles.footer}>
+        {project.demoUrl && (
+          <EditorialLink href={project.demoUrl} isExternal>
+            Live demo
+          </EditorialLink>
+        )}
         <EditorialLink href={`/projects/${project.slug}`}>
           Read case study →
         </EditorialLink>

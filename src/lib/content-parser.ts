@@ -9,6 +9,8 @@ const projectSchema = z.object({
   role: z.string().optional(),
   date: z.string(),
   stack: z.array(z.string()),
+  demoUrl: z.string().url().optional(),
+  featured: z.boolean().optional(),
 });
 
 export type ProjectFrontmatter = z.infer<typeof projectSchema>;
@@ -63,7 +65,12 @@ const siteConfigSchema = z.object({
     label: z.string(),
     href: z.string(),
     isExternal: z.boolean(),
-  }))
+  })),
+  footerNavigation: z.array(z.object({
+    label: z.string(),
+    href: z.string(),
+    isExternal: z.boolean(),
+  })).optional()
 });
 
 export type SiteConfig = z.infer<typeof siteConfigSchema>;
