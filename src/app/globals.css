@@ -1,0 +1,197 @@
+/* CSS Reset and Global Styles */
+
+:root {
+  /* Surface Canvas Elevation Level Tokens */
+  --surface-base: #0a0a0c;
+  --surface-elevated: #121215;
+  --surface-interactive: #1a1a1f;
+
+  /* Structural Border & Divider Tokens */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-interactive: rgba(255, 255, 255, 0.24);
+  --border-high-contrast: rgba(255, 255, 255, 0.50);
+
+  /* Typographic Foreground Tokens */
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-inverse: #0a0a0c;
+
+  /* Actionable Interactive Accent Token */
+  --accent-primary: #b89eff;
+  --accent-focus-ring: rgba(184, 158, 255, 0.85);
+
+  /* Typographic Hierarchy Scale (16px Root Baseline) */
+  --font-size-hero: clamp(2.25rem, 4vw, 3.25rem);
+  --font-size-h1: clamp(1.75rem, 3vw, 2.50rem);
+  --font-size-h2: clamp(1.375rem, 2.5vw, 1.75rem);
+  --font-size-h3: clamp(1.125rem, 2vw, 1.25rem);
+  --font-size-body: 1.00rem;
+  --font-size-caption: 0.875rem;
+  --font-size-mono: 0.8125rem;
+
+  /* Modular Line-Height (Leading) Specifications */
+  --leading-tight: 1.15;
+  --leading-snappy: 1.35;
+  --leading-prose: 1.70;
+
+  /* Atomic Spacing Rhythm Multiples */
+  --space-1: 0.25rem;
+  --space-2: 0.50rem;
+  --space-3: 0.75rem;
+  --space-4: 1.00rem;
+  --space-6: 1.50rem;
+  --space-8: 2.00rem;
+  --space-12: 3.00rem;
+  --space-16: 4.00rem;
+  --space-24: 6.00rem;
+
+  /* Corner Radius Scale */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* Banishment of Shadow */
+  --shadow-none: none;
+
+  /* Functional Duration Boundaries */
+  --duration-instant: 75ms;
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+
+  /* Deterministic Easing Curves */
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-linear: linear;
+
+  /* Container Measure Ceilings */
+  --container-max-measure: 768px;
+  --container-max-width: 1120px;
+  --container-gutter: clamp(1.25rem, 5vw, 3rem);
+}
+
+/* Reduced-Motion Universal Override Binding */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0.01ms;
+    --duration-fast: 0.01ms;
+    --duration-normal: 0.01ms;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--surface-base);
+  color: var(--text-primary);
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  /* Will be overridden by Next.js font variables, or fallback to system sans */
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  line-height: var(--leading-prose);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Skip link (visually hidden until focused) */
+.skip-link {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 1001;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  transform: translateY(-150%);
+  transition: transform var(--duration-normal) var(--ease-snappy);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--leading-tight);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--leading-snappy);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--leading-snappy);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-normal) var(--ease-snappy);
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: var(--surface-interactive);
+  color: var(--accent-primary);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

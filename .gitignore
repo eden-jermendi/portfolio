@@ -16,7 +16,13 @@ Thumbs.db
 *.local
 
 # PromptKit (internal)
-promptkit/
+promptkit
 
 .antigravitycli
+
+# Next.js
+.next
+*.tsbuildinfo
+
+
 
