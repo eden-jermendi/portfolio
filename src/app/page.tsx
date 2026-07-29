@@ -34,12 +34,12 @@ export default async function Home() {
       <PageStaggerWrapper>
         <InteractionScene targetState={{ complexity: 0.3, warp: 0.1, subdivision: 0.4, opacity: 0.03, bgColor: 'var(--surface-base)' }}>
           <div className={styles.philosophy}>
-              <BodyText variant="primary">
-                I approach software as a long-term system, untangling complexity through maintainable architecture, thoughtful trade-offs, and steady, incremental progress.
-              </BodyText>
+            <BodyText variant="primary">
+              I approach software as a long-term system, untangling complexity through maintainable architecture, thoughtful trade-offs, and steady, incremental progress.
+            </BodyText>
           </div>
         </InteractionScene>
-
+        <br></br>
         <InteractionScene targetState={{ complexity: 0.8, warp: 0.4, subdivision: 0.8, opacity: 0.08, bgColor: 'var(--surface-base)' }}>
           <Section aria-labelledby="systems-work-heading">
             <div className={styles.systemsWork}>
@@ -62,15 +62,7 @@ export default async function Home() {
         </InteractionScene>
       </PageStaggerWrapper>
 
-      {featuredWriting.length > 0 && (
-        <Section aria-labelledby="writing-heading">
-          <div className={styles.sectionHeader}>
-            <Heading level={2} id="writing-heading">Selected Writing</Heading>
-            <EditorialLink href="/writing">View all writing →</EditorialLink>
-          </div>
-          {/* Writing Previews would render here when content is added */}
-        </Section>
-      )}
+
     </Container>
   );
 }

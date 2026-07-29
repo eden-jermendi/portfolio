@@ -8,7 +8,7 @@ interface TextRotatorProps {
   interval?: number;
 }
 
-export function TextRotator({ phrases, interval = 1500 }: TextRotatorProps) {
+export function TextRotator({ phrases, interval = 3000 }: TextRotatorProps) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
