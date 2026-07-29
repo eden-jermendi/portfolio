@@ -22,8 +22,28 @@ import { FractalSystemProvider } from '@/components/providers/FractalSystemProvi
 import { LiveBackground } from '@/components/ui/LiveBackground'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://edenjermendi.com'),
   title: "Eden Jermendi | Full-stack System's Oriented Developer",
   description: "Backend-leaning full-stack developer. I build resilient, thoughtful software with a focus on good structure, useful interfaces, and code that feels deliberate rather than flashy.",
+  openGraph: {
+    title: "Eden Jermendi",
+    description: "Backend-leaning full-stack developer.",
+    url: 'https://edenjermendi.com',
+    siteName: 'Eden Jermendi Portfolio',
+    locale: 'en_US',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
