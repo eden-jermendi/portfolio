@@ -1,11 +1,18 @@
 ---
 title: "Design System Architecture"
-abstract: "An exploration into zero-runtime CSS tokens and strict server-first rendering architectures for modern digital publications."
+abstract: "A strict, server-first Next.js portfolio architecture utilizing zero-runtime CSS Modules and a custom Markdown content pipeline."
 date: "2026-07-29"
-role: "Lead Architect"
+role: "Lead Developer & Architect"
 stack: 
   - "Next.js"
   - "React"
   - "CSS Modules"
+featured: true
 ---
-This is the parsed body of the deep architectural narrative. In future phases, this will be run through `next-mdx-remote` or similar to parse semantic HTML and CodeBlocks from Markdown syntax.
+
+This project serves as the architectural foundation for my personal portfolio. It was built from the ground up on the Next.js App Router with a strict server-first philosophy, deliberately avoiding heavy client-side JavaScript execution and runtime styling libraries.
+
+Key engineering decisions include:
+- A custom Markdown/MDX pipeline validated rigorously at build-time using Zod.
+- A zero-runtime styling system using CSS Modules and native custom properties.
+- A hyper-focus on semantic HTML, native browser behavior, and performance overhead reduction.

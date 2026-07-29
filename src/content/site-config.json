@@ -1,6 +1,6 @@
 {
-  "title": "Eden Jermendi | Full-stack System's Oriented Developer",
-  "description": "Certified full stack developer with a strong interest in backend, infrastructure, and systems engineering.",
+  "title": "Eden Jermendi | Full-stack Systems Engineer",
+  "description": "Backend-leaning full-stack developer based in Wellington, Aotearoa New Zealand. I build resilient, thoughtful software with a focus on good structure, useful interfaces, and code that feels deliberate rather than flashy.",
   "baseUrl": "https://edenjermendi.com",
   "author": "Eden Jermendi",
   "navigation": [
@@ -8,6 +8,23 @@
       "label": "Projects",
       "href": "/projects",
       "isExternal": false
+    },
+    {
+      "label": "Resume",
+      "href": "/resume.pdf",
+      "isExternal": true
+    },
+    {
+      "label": "About",
+      "href": "/about",
+      "isExternal": false
+    }
+  ],
+  "footerNavigation": [
+    {
+      "label": "Contact",
+      "href": "mailto: edenjermendi@gmail.com",
+      "isExternal": true
     },
     {
       "label": "GitHub",

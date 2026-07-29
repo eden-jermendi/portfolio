@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Manrope, IBM_Plex_Mono } from 'next/font/google'
+import { SiteHeader } from '@/components/layout/SiteHeader'
+import { Footer } from '@/components/layout/Footer'
 import './globals.css'
 
 const sans = Manrope({
@@ -16,8 +18,8 @@ const mono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Eden Jermendi's Portfolio",
-  description: "Systems Engineer portfolio featuring selected architecture case studies and technical writing.",
+  title: "Eden Jermendi | Full-stack System's Oriented Developer",
+  description: "Backend-leaning full-stack developer. I build resilient, thoughtful software with a focus on good structure, useful interfaces, and code that feels deliberate rather than flashy.",
 }
 
 export default function RootLayout({
@@ -31,7 +33,9 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        {children}
+        <SiteHeader />
+        <main id="main">{children}</main>
+        <Footer />
       </body>
     </html>
   )

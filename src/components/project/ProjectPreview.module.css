@@ -25,5 +25,8 @@
 }
 
 .footer {
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
 }
