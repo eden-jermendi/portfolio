@@ -29,10 +29,10 @@ export default function ProjectsIndex() {
       >
         <Section aria-label="Projects Header">
           <div style={{ paddingTop: 'var(--space-12)', marginBottom: 'var(--space-8)' }}>
-            <Heading level={1}>All Systems Work</Heading>
+            <Heading level={1}>All Projects</Heading>
             <div style={{ marginTop: 'var(--space-4)' }}>
               <BodyText variant="primary">
-                A comprehensive archive of system architectures, case studies, and engineering projects.
+                A complete archive of professional work, technical case studies, and learning projects.
               </BodyText>
             </div>
           </div>
@@ -54,7 +54,7 @@ export default function ProjectsIndex() {
               <Section aria-label={`Projects from ${year}`}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
                   {projectsByYear[year].map(project => (
-                    <ProjectPreview key={project.slug} project={project} />
+                    <ProjectPreview key={project.slug} project={project} source="projects" />
                   ))}
                 </div>
               </Section>

@@ -18,15 +18,15 @@ export function HeroChoreography({ nameplate }: { nameplate: string }) {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
-    show: { 
-      opacity: 1, 
+    show: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }
     },
   };
 
   return (
-    <motion.div 
+    <motion.div
       className={styles.hero}
       variants={containerVariants}
       initial="hidden"
@@ -35,10 +35,13 @@ export function HeroChoreography({ nameplate }: { nameplate: string }) {
       <motion.div variants={itemVariants}>
         <Heading level={1}>{nameplate}</Heading>
       </motion.div>
-      
+
       <motion.div variants={itemVariants} style={{ marginTop: 'var(--space-4)', maxWidth: '65ch', height: '1.5em', display: 'flex', alignItems: 'center' }}>
         <BodyText variant="primary">
-          <TextRotator phrases={['Problem solver', 'Systems-oriented thinker', 'Full-stack developer', 'AI developer']} /> based in Wellington, Aotearoa New Zealand.
+          <motion.span layout transition={{ type: "tween", duration: 0.8, ease: "easeInOut" }} style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <TextRotator phrases={['Problem solver', 'Systems-oriented thinker', 'Full-stack developer', 'AI developer']} /> 
+            <motion.span layout transition={{ type: "tween", duration: 0.8, ease: "easeInOut" }} style={{ marginLeft: '0.25em' }}>based in Wellington, Aotearoa New Zealand.</motion.span>
+          </motion.span>
         </BodyText>
       </motion.div>
 
