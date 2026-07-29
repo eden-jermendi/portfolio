@@ -35,7 +35,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body>
+      <body suppressHydrationWarning>
         <a href="#main" className="skip-link">
           Skip to main content
         </a>

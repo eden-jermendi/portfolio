@@ -30,28 +30,26 @@ export default async function Home() {
           <HeroChoreography nameplate={nameplate} />
         </Section>
       </InteractionScene>
-
       <PageStaggerWrapper>
         <InteractionScene targetState={{ complexity: 0.3, warp: 0.1, subdivision: 0.4, opacity: 0.03, bgColor: 'var(--surface-base)' }}>
-          <div className={styles.philosophy}>
+          <div className={styles.philosophy} style={{ marginBottom: 'var(--space-12)' }}>
             <BodyText variant="primary">
               I approach software as a long-term system, untangling complexity through maintainable architecture, thoughtful trade-offs, and steady, incremental progress.
             </BodyText>
           </div>
         </InteractionScene>
-        <br></br>
         <InteractionScene targetState={{ complexity: 0.8, warp: 0.4, subdivision: 0.8, opacity: 0.08, bgColor: 'var(--surface-base)' }}>
           <Section aria-labelledby="systems-work-heading">
             <div className={styles.systemsWork}>
               <div className={styles.sectionHeader}>
-                <Heading level={2} id="systems-work-heading">Selected Systems Work</Heading>
+                <Heading level={2} id="systems-work-heading">Featured Work</Heading>
                 <EditorialLink href="/projects">View all work →</EditorialLink>
               </div>
 
               {featuredProjects.length > 0 ? (
                 <div className={styles.projectList}>
                   {featuredProjects.map(project => (
-                    <ProjectPreview key={project.slug} project={project} />
+                    <ProjectPreview key={project.slug} project={project} source="home" />
                   ))}
                 </div>
               ) : (

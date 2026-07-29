@@ -19,7 +19,7 @@ export function TextRotator({ phrases, interval = 3000 }: TextRotatorProps) {
   }, [phrases.length, interval]);
 
   return (
-    <span style={{ display: 'inline-flex', position: 'relative', whiteSpace: 'nowrap' }}>
+    <motion.span layout transition={{ type: "tween", duration: 0.8, ease: "easeInOut" }} style={{ display: 'inline-flex', position: 'relative', whiteSpace: 'nowrap' }}>
       <AnimatePresence mode="wait">
         <motion.span
           key={index}
@@ -31,6 +31,6 @@ export function TextRotator({ phrases, interval = 3000 }: TextRotatorProps) {
           {phrases[index]}
         </motion.span>
       </AnimatePresence>
-    </span>
+    </motion.span>
   );
 }

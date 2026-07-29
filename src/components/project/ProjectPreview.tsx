@@ -18,9 +18,10 @@ interface ProjectPreviewData {
 interface ProjectPreviewProps {
   project: ProjectPreviewData;
   className?: string;
+  source?: 'home' | 'projects';
 }
 
-export function ProjectPreview({ project, className = '' }: ProjectPreviewProps) {
+export function ProjectPreview({ project, className = '', source }: ProjectPreviewProps) {
   const metadataItems: MetadataItem[] = [
     { label: 'Date', value: project.date },
     ...(project.role ? [{ label: 'Role', value: project.role }] : []),
@@ -46,7 +47,7 @@ export function ProjectPreview({ project, className = '' }: ProjectPreviewProps)
             Live demo
           </EditorialLink>
         )}
-        <EditorialLink href={`/projects/${project.slug}`}>
+        <EditorialLink href={`/projects/${project.slug}${source ? `#from-${source}` : ''}`}>
           Read case study →
         </EditorialLink>
       </div>
