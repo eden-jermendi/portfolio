@@ -37,11 +37,11 @@ export function Footer({ author }: FooterProps) {
         <div className={styles.footerInner}>
           <div className={styles.topTier}>
             <p className={styles.contactText}>
-              Feel free to <strong><a href="mailto:edenjermendi@gmail.com" className={styles.contactLink}>contact</a></strong> me with any kind of question.
+              Feel free to <strong><a href="mailto:edenjermendi@gmail.com" className={styles.contactLink}>contact</a></strong> me with any sort of question.
             </p>
             <div className={styles.socials}>
-              <a href="https://github.com/edenjermendi" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Github"><GithubIcon /></a>
-              <a href="https://linkedin.com/eden-jermendi" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="LinkedIn"><LinkedinIcon /></a>
+              <a href="https://github.com/eden-jermendi" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Github"><GithubIcon /></a>
+              <a href="https://linkedin.com/in/eden-jermendi" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="LinkedIn"><LinkedinIcon /></a>
             </div>
           </div>
 
