@@ -5,7 +5,7 @@ The site focuses on clean architecture, accessibility, performance, and maintain
 
 ## Preview
 
-**Live Deployment:** Hosted on [Vercel.](https://edenjermendi.com/)
+**Live Deployment:** Hosted on [Vercel.](https://edenjermendi.dev/)
 
 ## Tech Stack
 
