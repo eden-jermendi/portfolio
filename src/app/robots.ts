@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://edenjermendi.com/sitemap.xml',
+    sitemap: 'https://edenjermendi.dev/sitemap.xml',
   };
 }
