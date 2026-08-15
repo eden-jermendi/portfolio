@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllProjects } from '@/lib/content-parser';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://edenjermendi.com';
+  const baseUrl = 'https://edenjermendi.dev';
   const projects = getAllProjects();
 
   const projectUrls = projects.map((project) => ({

@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/edenjermendi/portfolio/issues"
   },
-  "homepage": "https://edenjermendi.com",
+  "homepage": "https://edenjermendi.dev",
   "devDependencies": {
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.17",
