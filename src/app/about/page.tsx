@@ -42,7 +42,7 @@ export default function AboutPage() {
               Outside of engineering, I produce music and study cultural history from a critical lens. That same curiosity drives how I approach software: I seek to understand the underlying systems, question defaults/assumptions, and build with deliberate intent.
             </BodyText>
             <BodyText variant="primary">
-              I am actively seeking part time and contract based backend leaning roles, but I remain highly adaptable. I am open to taking on a wide range of engineering challenges; from migrating legacy services and updating outdated software, to building reliable web applications and personal storefronts.
+              I am actively seeking part time and contract based backend leaning roles, but I remain highly adaptable. I am open to taking on a wide range of engineering challenges, ranging from migrating legacy services and updating outdated software, to building reliable web applications, personal storefronts and more.
             </BodyText>
           </div>
         </Section>
