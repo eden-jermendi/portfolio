@@ -5,8 +5,9 @@ import styles from './StackSymbols.module.css';
 
 export function StackSymbols() {
   const stack = [
-    'JS', 'TS', 'React', 'Next.js', 'Express', 
-    'Git', 'GitHub', 'Tailwind', 'Vercel', 'Supabase', 'Figma'
+    'JS', 'TS', 'React', 'Next.js', 'Express', 'Node.js', 
+    'PostgreSQL', 'Supabase', 'Vitest', 'Postman', 'Docker', 
+    'Git', 'GitHub', 'VS Code', 'Tailwind', 'Vercel', 'Figma'
   ];
 
   const containerVariants = {
